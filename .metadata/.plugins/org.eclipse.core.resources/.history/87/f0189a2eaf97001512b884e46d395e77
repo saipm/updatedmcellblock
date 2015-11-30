@@ -168,7 +168,7 @@ tr.spaceUpper > td
     <table  class="table table-striped table-condensed" >
         <tbody>
         <tr>
-        <tr style="padding-bottom: 20px;" height="130px" ng-repeat="testcase in testcases">
+       <!--   <tr style="padding-bottom: 20px;" height="130px" ng-repeat="testcase in testcases">
          <td></td><td></td>
        <td>
        <input type="hidden" ng-init="init(testcase.testcase)" ng-model="testcase.testcase">

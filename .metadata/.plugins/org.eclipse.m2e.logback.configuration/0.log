@@ -3649,3 +3649,7 @@
 2015-11-30 12:47:14,329 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/saisreem/saiprj/ngdemo1/src/main/resources
 2015-11-30 12:47:14,334 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2015-11-30 12:47:14,334 [Worker-23] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/saisreem/saiprj/ngdemo1/src/test/resources
+2015-11-30 14:10:36,446 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-11-30 14:10:36,447 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/saisreem/saiprj/ngdemo1/src/main/resources
+2015-11-30 14:10:36,449 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-11-30 14:10:36,449 [Worker-30] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/saisreem/saiprj/ngdemo1/src/test/resources
