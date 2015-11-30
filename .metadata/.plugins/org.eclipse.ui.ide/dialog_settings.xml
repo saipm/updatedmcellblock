@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.dialogs.FilteredResourcesSelectionDialog">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="false" key="ShowDerived"/>
+		<item value="false" key="FilterByLocation"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;workingSet workingSetName=&quot;&quot;/&gt;" key="WorkingSet"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History&gt;&#x0A;&lt;historyRootNode&gt;&#x0A;&lt;infoNode path=&quot;/Servers/Tomcat v7.0 Server at localhost-config/server.xml&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/lib/angular/angular.js&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/assets/css/bootstrap.css&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/partials/dummy.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/img/bootstrap/logo_165565_20150921051734.png&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/css/pages.css&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/dummynew.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/partials/user-list.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/index.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/domain/Device.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/service/impl/DeviceServiceImpl.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/repositories/contract/DeviceRepository.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/js/services.js&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/DeviceRestService.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/service/impl/TestcaseServiceImpl.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/js/app.js&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/partials/device-info.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/LoginDao.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/LoginServlet.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/SigninServlet.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/js/controllers.js&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/partials/testcase-list.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/webapp/partials/device-list.html&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/domain/Testcase.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/domain/Status.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/TestcaseDao.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/SampleJavaTest.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;infoNode path=&quot;/ngdemo1/src/main/java/ngdemo/web/rest/TestcaseRestService.java&quot; type=&quot;1&quot;/&gt;&#x0A;&lt;/historyRootNode&gt;&#x0A;&lt;/History&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="53" key="DIALOG_Y_ORIGIN"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="350" key="DIALOG_X_ORIGIN"/>
+			<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+		</section>
+	</section>
+	<section name="ExternalProjectImportWizard">
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/home/saisreem/saiprj/ngdemo1"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item value="613" key="DIALOG_WIDTH"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
+		<item value="344" key="DIALOG_X_ORIGIN"/>
+		<item value="600" key="DIALOG_HEIGHT"/>
+		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+</section>

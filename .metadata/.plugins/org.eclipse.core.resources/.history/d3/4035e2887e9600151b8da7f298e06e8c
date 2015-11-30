@@ -1,0 +1,47 @@
+package ngdemo.service.impl;
+
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+import ngdemo.domain.Testcase;
+import ngdemo.repositories.contract.DeviceRepository;
+import ngdemo.repositories.contract.TestcaseRepository;
+import ngdemo.service.contract.TestcaseService;
+
+import java.util.List;
+
+@Singleton
+public class TestcaseServiceImpl implements TestcaseService {
+
+    private final TestcaseRepository testcaseRepository;
+
+    @Inject
+    public TestCaseServiceImpl(TestcaseRepository deviceRepository) {
+        this.TestcaseRepository = deviceRepository;
+    }
+
+    public List getAllDevices() {
+        return this.deviceRepository.getAll();
+    }
+
+    public Testcase getById(int id) {
+        return this.deviceRepository.getById(id);
+    }
+
+    public Testcase createNewTestcase(Testcase testcase) {
+        Testcase u = this.deviceRepository.create(device);
+        return u;
+    }
+
+    public Testcase update(Testcase testcase) {
+        return this.testcaseRepository.update(testcase);
+    }
+
+    public void remove(String id) {
+        this.testcaseRepository.remove(id);
+    }
+
+    public int getNumberOfTestcases() {
+        return this.testcaseRepository.getNumberOfTestcases();
+    }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="ngdemo.domain.TestCase"/>
+<fullyQualifiedTypeName name="ngdemo.domain.NullTestcase"/>
+<fullyQualifiedTypeName name="ngdemo.web.rest.TestcaseDao"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="ngdemo.repositories.contract.TestcaseRepository"/>
+<fullyQualifiedTypeName name="ngdemo.service.contract.TestcaseService"/>
+<fullyQualifiedTypeName name="ngdemo.service.impl.TestcaseServiceImpl"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="ngdemo.domain.Testcase"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="ngdemo.web.rest.SampleJavaTest"/>
+</qualifiedTypeNameHistroy>
