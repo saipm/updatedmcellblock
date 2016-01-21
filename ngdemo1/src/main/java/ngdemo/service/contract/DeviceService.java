@@ -8,7 +8,7 @@ public interface DeviceService {
 
     List<Device> getAllDevices();
 
-    Device getById(int id);
+    Device getById(String id);
 
     Device createNewDevice(Device device);
 

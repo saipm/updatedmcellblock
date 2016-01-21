@@ -23,7 +23,7 @@ public class TestcaseServiceImpl implements TestcaseService {
         return this.testcaseRepository.getAll();
     }
 
-    public Testcase getById(int id) {
+    public Testcase getById(String id) {
         return this.testcaseRepository.getById(id);
     }
 
@@ -43,6 +43,12 @@ public class TestcaseServiceImpl implements TestcaseService {
     public int getNumberOfTestcases() {
         return this.testcaseRepository.getNumberOfTestcases();
     }
+
+	@Override
+	public Testcase getById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }

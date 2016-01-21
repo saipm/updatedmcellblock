@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <script data-require="angular.js@1.2.25" data-semver="1.2.25" src="https://code.angularjs.org/1.2.25/angular.js"></script>
+    <link data-require="bootstrap@*" data-semver="3.2.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" />
+    <link data-require="bootstrap-css@~3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link data-require="font-awesome@*" data-semver="4.2.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+    <script data-require="ui-bootstrap@*" data-semver="0.11.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="example.js"></script>
+  </head>
+
+  <body data-ng-app="plunker">
+    <section class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+ Datepicker</strong>
+      </div>
+      <div class="panel-body" data-ng-controller="DatepickerDemoCtrl">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="input-group ui-datepicker">
+              <span class="input-group-addon" ng-click="open($event)">
+                <i class="fa fa-calendar"></i>
+              </span>
+              <input type="text" class="form-control" datepicker-popup="{{format}}" 
+                ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" 
+                datepicker-options="dateOptions" date-disabled="disabled(date, mode)" 
+                ng-required="true" close-text="Close"
+                ng-click="open($event)" />
+            </div>
+            <div class="callout callout-info">
+              <p>Date is: {{dt | date:'fullDate'}}</p>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <p>
+              Format:                                                                                                                                      
+              <span class="ui-select">
+                <select ng-model="format" ng-options="f for f in formats"></select>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+
+</html>
+
+
+
+
+
+    <!-- <button class="btn btn-sm btn-info" ng-click="today()">Today</button>
+            <div class="space"></div>
+            <button class="btn btn-sm btn-default" ng-click="dt = '2009-08-24'">2009-08-24</button>
+            <div class="space"></div>
+            <button class="btn btn-sm btn-success" ng-click="toggleWeeks()" tooltip="For inline datepicker">Toggle Weeks</button>
+            <div class="space"></div>
+            <button class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+            <div class="space"></div>
+            <button class="btn btn-sm btn-default" ng-click="toggleMin()" tooltip="After today restriction">Min date</button>
+         -->

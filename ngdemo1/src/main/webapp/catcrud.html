@@ -1,0 +1,341 @@
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>  
+  <style>
+  a:link { color: #000000; text-decoration: none}
+a:visited { color: #000000; text-decoration: none}
+a:hover { color: #3366CC; text-decoration: underline}
+a:active { color: #000000; text-decoration: none}
+.left-div {
+    float: left;
+    width: 500px;
+    margin-left:10px;
+    margin-top:5px;
+    margin-right: 8px;
+}
+.right-div {
+    margin-left:1150px;
+}
+  .alert-change {
+  color: #31708f;
+  background-color: #4d93ff;
+  border-color: #bce8f1;
+}
+#rcorners1 {
+    border-radius: 25px;
+    background: #66a2ff;
+    padding: 20px; 
+    width: 850px;
+    height: 150px;    
+}
+
+  body{
+  font-family:calibri;
+  }
+  button {
+    background:none!important;
+     border:none; 
+     padding:0!important;
+    
+    /*optional*/
+    font-family:calibri; /*input has OS specific font-family*/
+     color:#069;
+     text-decoration:underline;
+     cursor:pointer;
+}
+.users {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+/* Column widths are based on these cells */
+.row-ID {
+  width: 10%;
+}
+.row-name {
+  width: 40%;
+}
+.row-job {
+  width: 30%;
+}
+.row-email {
+  width: 20%;
+}
+.users td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.users thead {
+  background: #4d93ff;
+  color: white;
+}
+.users td,.users thead {
+  text-align: left;
+  padding: 5px 10px;
+}
+.users tr:nth-child(even) {
+  background: #b3d1ff;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+  </style>
+    <title>User Category</title>  
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+     <!-- <link rel="stylesheet" href="app.css"> -->
+  </head>
+  <body ng-app="myApp">
+      <div style="border: 25px solid white;" class="generic-container" ng-controller="AppController as ctrl" ng-init="init()">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+              <div class="left-div">
+                            <span class="lead"><b>MCellBlock</b></span>
+              </br><i><b>User Category</b></i>
+              </div>
+              
+              <div class="right-div">
+              <img src="img/bootstrap/mobile-integration-workgroup-squarelogo.png" border="0" alt="MIW" style="margin-bottom:'0px';height:60px;width:'60px;'"/></br> 
+              </div></div></br>
+              </br>
+              </br>
+                   <div ng-show="status">
+              <div class="alert alert-info" style="margin-left:20px;margin-right:20px;">
+              User Category updated Successfully
+              </div>
+              </div>
+              <div ng-show="deletestatus">
+              <div class="alert alert-info" style="margin-left:20px;margin-right:20px;">
+              User Category deleted Successfully
+              </div>
+              </div>
+              
+             
+              <div style="margin-left:150px;margin-right:20px;">
+              <div style="margin-left:50px;" class="formcontainer">
+                  <form style="font-family:calibri;font-size:12px;" ng-submit="ctrl.submit()" name="myForm" class="form-horizontal" id="rcorners1">
+                      <!-- <input type="text" ng-model="ctrl.user.deptId" /> -->
+                      
+                  
+                      <div align="center" class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="address">User Category</label>
+                              <div ng-show="editcheck">
+                              <div class="col-md-7">
+                                  <input type="text" name="id" ng-model="id" id="id" class="username form-control input-sm" ng-pattern="/^[a-zA-Z]*$/" placeholder="Enter User Category" required maxlength="2" disabled/>
+                              </div>
+                              </div>
+                              <div ng-show="editcheck!=true">
+                              <div class="col-md-7">
+                                  <input type="text" name="id" ng-model="id" id="id" class="username form-control input-sm" ng-pattern="/^[a-zA-Z]*$/"  placeholder="Enter User Category" required maxlength="2"/>
+                              </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div align="center" class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="uname">User Category Description</label>
+                              <div class="col-md-7">
+                                  <input type="text" ng-model="name" id="uname" class="username form-control input-sm" placeholder="Enter Category Description" required maxlength="50"/>
+                              </div>
+                          </div>
+                      </div>
+                
+                  </form>
+                
+                  </br>
+                  </br>
+                  <form align="center">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"><b>Search</b></i></div>
+        <input type="text" class="form-control" placeholder="Search Designation" ng-model="searchDevice" style="width: 770px;">
+      </div>      
+    </div>
+ </br></br>
+   <table style="margin-left:-70px;font-family:calibri;font-size:15px;" class="users" >
+    
+    <thead>
+        <th class="row-2 row-id">
+          <a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
+            User Category
+            <span ng-show="sortType == 'id' && !sortReverse"><i class="fa fa-caret-down"></i>
+            </span>
+            <span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th class="row-3 row-job">
+          <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+           &nbsp;&nbsp;Description
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+     <!--  </tr> -->
+    </thead>
+    
+    <tbody>
+      <tr ng-repeat="u in desigs | orderBy:sortType:sortReverse | filter:searchDevice">
+      <!-- <td>{{$index+1}}</td> -->
+       <td><a href="" ng-click="edit(u.id,u.name);"><u>{{u.id}}</u></a></td>
+        <td>{{ u.name }}</td>
+      </tr>
+    </tbody>
+    
+  </table>
+  </form>
+              </div>
+              </div>
+              </br>
+             
+              <div style="margin-left:900px" >
+            <div class="row" style="font-family:calibri;">
+                       <button type="button" ng-disabled="myForm.$invalid" ng-click="submitform(id,name,editcheck)"><b>Submit</b></button>
+                       &nbsp;&nbsp;  <button type="button" ng-disabled="myForm.$invalid" ng-click="deletedata(id)"><b>Delete</b></button>
+                       &nbsp;&nbsp;   <button type="button" ng-click="cancel()"><b>Cancel</b></button>
+                       </div>
+                       </div>
+                       </br>
+                       </br>
+          </div>
+         
+      </div>
+       
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js">
+      </script>  
+      <script>
+          angular.module('myApp', [])
+          
+          .controller('AppController', ['$scope','$http','$window', function($scope,$http,$window) {
+        	  
+        	  $scope.desigs='';
+        	  
+        	   var url = window.location.href.split('/');
+        	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+        	  // alert(baseUrl);
+        	  // if (!location.origin)
+        		//   location.origin = location.protocol + "//" + location.host;
+        	   //alert(location.origin);
+               //var newURL = location.protocol + "//"  + location.host + "    " + location.pathname;
+               //var context=location.pathname.split("/")[1];
+                 //newURL = newURL.substring(0,newURL.indexOf(""));
+                 //newURL=location.protocol + "//"  + location.host +"/"+context;
+                 //alert(newURL);
+        	 // alert($window.location.pathname);
+        	  
+        	  $scope.init=function(){
+        		  $scope.editcheck=false;
+        		  $scope.status=false;
+        		  $scope.deletestatus=false;
+        		  $http.get(baseUrl+"web/users/roles").
+        			 success(function(data) {
+        			   $scope.desigs=data;
+        			    }).error(function (data, status, headers, config) {
+        			        alert("error");
+        		});
+        	  };
+        	  
+               
+              $scope.submitform = function(deptId,deptName,editcheck) {
+            	  if($scope.editcheck==false){
+            	  $http.get(baseUrl+"web/users/roles/checkid/"+deptId).
+        			 success(function(data) {
+        				 if(data==0){
+                               $http.get(baseUrl+"web/users/roles/"+deptId+"/"+deptName).
+                			 success(function(data) {
+                				 $scope.status=true;
+                				 $scope.deletestatus=false;
+                				 $scope.id='';
+                				 $scope.name='';
+                				 $scope.callcats();
+                				// $scope.init();
+                			    }).error(function (data, status, headers, config) {
+                			       // alert("error");
+                		});
+                    	  
+        				 }else
+        					 {
+        					 $window.alert("Category already exists. Please enter a new category.");
+        					 $scope.id='';
+        					 }
+        			    }).error(function (data, status, headers, config) {
+        			        alert("error");
+        		});
+            	
+            	  }
+            	  else
+            		  {
+            		   $http.get(baseUrl+"web/users/roles/"+deptId+"/"+deptName+"/"+deptId).
+          			 success(function(data) {
+          				 $scope.status=true;
+          				 $scope.deletestatus=false;
+          				 $scope.id='';
+          				 $scope.name='';
+          				 $scope.callcats();
+          				// $scope.init();
+          			    }).error(function (data, status, headers, config) {
+          			       // alert("error");
+          		});
+            		  }
+              };
+              $scope.edit = function(deptId,deptName) { 
+            	  $scope.editdeptId=deptId;
+            	  $scope.id=deptId;
+            	  $scope.name=deptName;
+            	  $scope.editcheck=true;
+              };
+              $scope.deletedata = function(deptId) { 
+            	  $scope.deptId=deptId;
+            	  var deleteUser=$window.confirm('Are you sure you want to delete '+deptId+'?');
+            	  if(deleteUser){
+            	   $http.get(baseUrl+"web/users/roles/"+deptId).
+      			 success(function(data) {
+      				$scope.deletestatus=true;
+      				$scope.status=false;
+      				 $scope.id='';
+      				 $scope.name='';
+      				// $scope.init();
+      				 $scope.editcheck=false;
+       				$scope.callcats();
+      			    }).error(function (data, status, headers, config) {
+      			        alert("error");
+      		});
+            	  }
+              };
+              $scope.cancel = function() { 
+            	  
+            	  var deleteUser=$window.confirm('Are you sure you want to discard all the changes?');
+            	  if(deleteUser){
+            		  $scope.id='';
+       				 $scope.name='';
+       				 $scope.init();
+            	  }
+            	  };
+            	  
+            	  $scope.callcats=function(){
+            		  $http.get(baseUrl+"web/users/roles").
+         			 success(function(data) {
+         			   $scope.desigs=data;
+         			    }).error(function (data, status, headers, config) {
+         			        alert("error");
+         		});
+            	  };
+            	  
+            	  $scope.reset=function(){
+            		  $scope.id='';
+            		  $scope.name='';
+            	  };
+            	  $scope.change=function(id){
+            		  $http.get(baseUrl+"web/users/roles/checkid/"+id).
+           			 success(function(data) {
+           			    }).error(function (data, status, headers, config) {
+           			        alert("error");
+           		});
+            	  }
+ 
+      }]);
+          
+  </script>
+  </body>
+</html>

@@ -11,5 +11,10 @@ angular.module('ngdemo', ['ngdemo.filters', 'ngdemo.services', 'ngdemo.directive
         $routeProvider.when('/device-list', {templateUrl: 'partials/device-list.html', controller: 'DeviceListCtrl'});
         $routeProvider.when('/testcase-list', {templateUrl: 'partials/testcase-list.html', controller: 'TestcaseListCtrl'});
         $routeProvider.when('/device-info', {templateUrl: 'partials/device-info.html', controller: 'DeviceListCtrl'});
+        $routeProvider.when('/home', {templateUrl: 'home.jsp', controller: 'DeviceListCtrl'});
+        $routeProvider.when('/devicestest', {templateUrl: 'partials/devices.html', controller: 'DeviceListCtrl'});
+        $routeProvider.when('/dashboard', {templateUrl: 'partials/testnew.html', controller: 'DeviceListCtrl'});
+        /*$routeProvider.when('/device-info', {templateUrl: 'partials/device-info.html', controller: 'DeviceListCtrl'});
+        $routeProvider.when('/device-info', {templateUrl: 'partials/device-info.html', controller: 'DeviceListCtrl'});*/
         $routeProvider.otherwise({redirectTo: '/device-list'});
     }]);

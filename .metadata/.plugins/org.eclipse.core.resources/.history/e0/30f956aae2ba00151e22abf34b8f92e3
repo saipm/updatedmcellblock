@@ -1,0 +1,43 @@
+
+<html>
+<head>
+ <style>
+ li {
+    display: inline;
+}
+    .moreinfo {
+    	  display: inline-block;
+    	} 
+    	TD{font-family: Arial;
+    	 font-size: 11pt;}
+    </style>
+    <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    
+    
+    <script type="text/javascript">
+    var deviceId;
+    var processed_json = new Array(); 
+    var processed_json1 = new Array();  
+    $( document ).ready(function() {
+        alert( "document loaded" );	
+        	var pathname = window.location.pathname; // Returns path only
+        	var url      = window.location.href; 
+      deviceId = url.substr(url.indexOf("=") + 1);
+      alert(deviceId);
+      document.getElementById("test").innerHTML=deviceId;
+      var url = window.location.href.split('/');
+	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+      $.getJSON(baseUrl+'web/devicetests/querydata1/'+deviceId, function(data) {
+    	  var out = "<table bgcolor='#ECEEEF' align='right' rules= rows> ";
+    	  for(var i=0;i<data.length;i++){
+    		  out=out+"<tr background-color:#669900 style='border: 2px solid white;'><td>"+data[i].data+"</td></tr>"
+    	  }
+    	  out=out+"</table>";
+    	   document.getElementById("test").innerHTML=out;
+     });
+      }); 
+      </script>
+      </head>
+      </html>

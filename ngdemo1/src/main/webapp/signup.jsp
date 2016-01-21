@@ -13,7 +13,7 @@ body{
 color:"white";
 }
 </style>
-    <title> MCELLBLOCKS</title>
+    <title> MCELLBLOCK</title>
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/session.css" rel="stylesheet" /> 
@@ -65,7 +65,7 @@ color:"white";
         </div>
       </fieldset>
       <p>
-        <a href="/ngdemo/dummynew.html">Log in</a> or <a href="/ngdemo/reset_password.html">reset your password</a>
+        <a href="/ngdemo1/dummynew.html">Log in</a> or <a href="/ngdemo1/reset_password.html">reset your password</a>
       </p>
   </form> <!-- /commonForm  -->
   </div> <!-- /session -->

@@ -1,0 +1,148 @@
+package ngdemo.web.rest;
+
+import com.google.inject.Inject;
+import ngdemo.domain.User;
+import ngdemo.domain.Category;
+import ngdemo.domain.Dept;
+import ngdemo.domain.Designation;
+import ngdemo.domain.Testcase;
+import ngdemo.service.contract.UserService;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Path("/users")
+public class UserRestService {
+
+    private final UserService userService;
+
+    @Inject
+    public UserRestService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GET
+    @Path("numberOfUsers")
+    @Produces(MediaType.APPLICATION_JSON)
+    public int getNumberOfUsers() {
+        return userService.getNumberOfUsers();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> getAllUsersInJSON() {
+        return userService.getAllUsers();
+    }
+
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User getUserById(@PathParam("id") String id) {
+        return userService.getById(id);
+    }
+    
+    @GET
+    @Path("/create/{name}/{role}/{desig}/{dept}/{testcases}/{dashboard}/{mytestcases}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String createUser(@PathParam("name") String id1, @PathParam("role") String id2, @PathParam("desig") String id3,
+    		@PathParam("dept") String id4, @PathParam("testcases") String testcases, @PathParam("dashboard") String dashboard,
+    		@PathParam("mytestcases") List<String> mytestcases) {
+       CreateDao cd = new CreateDao();
+       for(String test:mytestcases){
+    	   System.out.println("inside testcases:::"+test);
+    	   
+    	   //System.out.println(test.split(":")[0]);
+       }
+       int lastNum = CreateDao.getlastnum(id2)+1;
+       int length = String.valueOf(lastNum).length();
+       int lengthdiff= 6-length;
+       String UserId=null;
+       String appendZero="";
+       if(lengthdiff==0){
+    	   UserId=id2+lastNum;
+       }
+       else{
+    	   for(;(lengthdiff>0);lengthdiff--){
+    		   appendZero+="0";
+    	   }
+       UserId=id2+appendZero+lastNum;
+       
+       }
+       int i=CreateDao.insert(id1, UserId, id3, id4,testcases);   
+     if(i==1){
+    	 CreateDao.updatelastnum(id2);
+    	 CreateDao.insertFunctions(UserId, testcases, dashboard);
+    	 System.out.println("user created Succesfully");
+    	 return "User created succesfully  "+UserId;
+     }
+     return "User creation failed";
+    }
+    
+    
+    @GET
+    @Path("/depts")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Dept> getDepts() {
+    	CreateDao cd = new CreateDao();
+    	List<Dept> d = new ArrayList<Dept>();
+    	d=CreateDao.getDepartmentData();
+    	return d;
+    }
+    
+    @GET
+    @Path("/depts/{id}/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Dept> insertDepts(@PathParam("id") String id,@PathParam("name") String name) {
+    	CreateDao cd = new CreateDao();
+    	//List<Dept> d = new ArrayList<Dept>();
+    	Dept d
+    	d=CreateDao.getDepartmentData();
+    	return d;
+    }
+    
+    @GET
+    @Path("/designations")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Designation> getDesignations() {
+    	CreateDao cd = new CreateDao();
+    	List<Designation> d = new ArrayList<Designation>();
+    	d=CreateDao.getDesigData();
+    	return d;
+    }
+
+    @GET
+    @Path("/roles")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Category> getRoles() {
+    	CreateDao cd = new CreateDao();
+    	List<Category> d = new ArrayList<Category>();
+    	d=CreateDao.getCategoryData();
+    	return d;
+    }
+
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public User create(User user) {
+        return userService.createNewUser(user);
+    }
+
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public User update(User user) {
+        return userService.update(user);
+    }
+
+    @DELETE
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void remove(@PathParam("id") String id) {
+        userService.remove(id);
+    }
+}

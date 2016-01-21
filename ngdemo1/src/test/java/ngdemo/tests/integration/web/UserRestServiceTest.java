@@ -1,4 +1,4 @@
-package ngdemo.tests.integration.web;
+/*package ngdemo.tests.integration.web;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -100,7 +100,7 @@ public class UserRestServiceTest {
 
     @Test
     public void testCreateUserShouldReturnNewUserWithCorrectId() throws IOException {
-        /*
+        
               $ curl -i -X POST -H 'Content-Type: application/json' -d '{"id":0, "firstName":"XX", "lastName":"YY"}' http://localhost:8080/ngdemo/web/users
 
                 HTTP/1.1 200 OK
@@ -110,7 +110,7 @@ public class UserRestServiceTest {
                 Date: Mon, 22 Jul 2013 09:12:38 GMT
 
                 {"id":12,"firstName":"XX","lastName":"YY"}
-         */
+         
 
         ClientResponse resp = webService.path("web").path("users")
                 .type(MediaType.APPLICATION_JSON_TYPE)
@@ -194,3 +194,4 @@ public class UserRestServiceTest {
         assertTrue(numberOfUsersAfter == numberOfUsersBefore - 1);
     }
 }
+*/

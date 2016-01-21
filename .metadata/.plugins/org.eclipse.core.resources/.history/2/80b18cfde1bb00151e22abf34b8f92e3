@@ -1,0 +1,9 @@
+<script>
+$(function() {
+$( "#datepicker" ).datepicker();
+  
+});
+</script>
+</head>
+<body>
+<p>Your Selected date Is : <input type="text" id="datepicker"></p>

@@ -1,0 +1,80 @@
+    package ngdemo.web.rest;  
+      
+    import java.sql.Connection;  
+    import java.sql.DriverManager;  
+    import java.sql.PreparedStatement;  
+    import java.sql.ResultSet;  
+    import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import ngdemo.domain.Status;
+import ngdemo.domain.Testcase;  
+      
+    public class StatusDao { 
+    	
+    	 
+    	 public static List<Status> getSelectQueryData(String query) {   
+    		 int count=0;
+             boolean status = false;  
+             Connection conn = null;  
+             PreparedStatement pst = null;  
+             List<Status> slist = new ArrayList<Status>();
+             ResultSet rs = null;  
+             List<Testcase> tc = new ArrayList<Testcase>();
+       
+             String url = "jdbc:mysql://localhost:3306/";  
+             String dbName = "mcellblock";  
+             String driver = "com.mysql.jdbc.Driver";  
+             String userName = "root";  
+             String password = "password";  
+             query="Select * from MasttestcaseLogs;";
+             try {  
+                 Class.forName(driver).newInstance();  
+                 conn = DriverManager  
+                         .getConnection(url + dbName, userName, password);  
+       
+                 pst=conn.prepareStatement(query);
+                 rs = pst.executeQuery();  
+                 while(rs.next()){
+                	 Status s = new Status();
+                	 s.setUserid(rs.getString("userid"));
+                	 s.setDevice(rs.getString("deviceid"));
+                	 s.setTestcase(rs.getString("testcaseid"));
+                	 s.setStatus(rs.getString("status"));
+                	 s.setErrormsg(rs.getString("error"));
+                	 s.setDate(rs.getString("date"));
+                	 s.setTime(rs.getString("time"));
+                	 slist.add(s);
+                 }
+       
+             } catch (Exception e) {  
+                 System.out.println(e);  
+             } finally {  
+                 if (conn != null) {  
+                     try {  
+                         conn.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+                 if (pst != null) {  
+                     try {  
+                         pst.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+                 if (rs != null) {  
+                     try {  
+                         rs.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+             }  
+             return slist;  
+         } 
+    	
+        
+    }  

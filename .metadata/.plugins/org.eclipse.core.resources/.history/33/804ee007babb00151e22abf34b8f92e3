@@ -1,0 +1,5 @@
+angular.module('dateTimePickerTest',['ui.bootstrap', 'ui.bootstrap.datetimepicker'])
+.controller('MyController',function($scope){
+  
+  
+});

@@ -43,6 +43,12 @@ services.factory('DevicesFactory', function ($resource) {
         create: { method: 'POST' }
     })
 });
+services.factory('TestDeviceFactory', function ($resource) {
+    return $resource('/ngdemo/web/devicetests', {}, {
+        query: { method: 'GET', isArray: true },
+        create: { method: 'POST' }
+    })
+});
 services.factory('TestcasesFactory', function ($resource) {
     return $resource('/ngdemo/web/testcases', {}, {
         query: { method: 'GET', isArray: true },

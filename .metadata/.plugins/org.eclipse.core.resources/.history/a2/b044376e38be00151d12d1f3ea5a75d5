@@ -1,0 +1,680 @@
+var app = angular.module('plunker', ['ui.bootstrap']);
+
+app.controller('DatepickerDemoCtrl', ['$scope', function($scope) {
+        $scope.today = function() {
+          return $scope.dt = new Date();
+        };
+        $scope.today1 = function() {
+            return $scope.dt1 = new Date();
+          };
+        $scope.today();
+        $scope.today1();
+        $scope.showWeeks = true;
+        $scope.showWeeks1 = true;
+        $scope.toggleWeeks = function() {
+          return $scope.showWeeks = !$scope.showWeeks;
+        };
+        $scope.toggleWeeks1 = function() {
+            return $scope.showWeeks1 = !$scope.showWeeks1;
+          };
+        $scope.clear = function() {
+          return $scope.dt = null;
+        };
+        $scope.clear1 = function() {
+            return $scope.dt1 = null;
+          };
+        $scope.disabled = function(date, mode) {
+          return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+        };
+        $scope.disabled1 = function(date, mode1) {
+            return mode1 === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+          };
+        $scope.toggleMin = function() {
+          var _ref;
+          return $scope.minDate = (_ref = $scope.minDate) != null ? _ref : {
+            "null": new Date()
+          };
+        };
+        $scope.toggleMin1 = function() {
+            var _ref1;
+            return $scope.minDate1 = (_ref = $scope.minDate1) != null ? _ref1 : {
+              "null": new Date()
+            };
+          };
+        $scope.toggleMin();
+        $scope.toggleMin1();
+        $scope.open = function($event) {
+          $event.preventDefault();
+          $event.stopPropagation();
+          console.log('..');
+          $scope.opened1 = false;
+          return $scope.opened = true;
+        };
+        $scope.open1 = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            console.log('..');
+            $scope.opened = false;
+            return $scope.opened1 = true;
+          };
+        $scope.dateOptions = {
+          'year-format': "'yy'",
+          'starting-day': 1
+        };
+        //$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+      //  return $scope.format = $scope.formats[0];
+        return $scope.format ='yyyy/MM/dd';
+      }
+    ]);
+
+app.controller('MainCtrl', function($scope) {
+    $scope.name = 'World';
+});
+
+app.controller('DropdownCtrl', function($scope) {
+    $scope.items = [
+        "The first choice!",
+        "And another choice for you.",
+        "but wait! A third!"
+    ];
+});
+
+app.filter('unique', function() {
+    return function(input, key) {
+    	//alert("shjdshdshjsdhdhjdshjdshjjdsd");
+        var unique = {};
+        var uniqueList = [];
+        for(var i = 0; i < input.length; i++){
+            if(typeof unique[input[i][key]] == "undefined"){
+                unique[input[i][key]] = "";
+                uniqueList.push(input[i]);
+            }
+        }
+        return uniqueList;
+    };
+});
+
+
+app.controller('DemoController', function ($scope, $http, $q) {
+    
+    $scope.timeout = 5;
+    $scope.delay = 3
+    
+    function createData () {
+         var result = "";
+        
+        result += "json=" + encodeURI(JSON.stringify({
+               text : [
+                   "My timeout is ",
+                   $scope.timeout,
+                   " seconds and my delay is ",
+                   $scope.delay,
+                   " seconds."
+               ].join('')
+           }));
+        
+        result += '&delay=' + $scope.delay
+        
+        return result;
+    }
+    
+    function httpRequestHandler () {
+        var timeout = $q.defer(),
+            result = $q.defer(),
+            timedOut = false,
+            httpRequest;
+        
+        setTimeout(function () {
+            timedOut = true;
+            timeout.resolve();
+        }, (1000 * $scope.timeout));
+        
+        httpRequest = $http({
+            method : 'get',
+            url: 'http://localhost:8082/ngdemo/web/testcases/getalltestcases',
+            data: createData(),
+            cache: false,
+            timeout: timeout.promise
+        });
+        
+        httpRequest.success(function(data, status, headers, config) {
+            result.resolve(data);
+        });
+
+		httpRequest.error(function(data, status, headers, config) {
+            if (timedOut) {
+                result.reject({
+                    error: 'timeout',
+                    message: 'Request took longer than ' + $scope.timeout + ' seconds.'
+            });
+            } else {
+                result.reject(data);
+            }
+        });
+        
+        return result.promise;
+    }
+    
+    $scope.makeRequest = function () {
+        $scope.status = 'Requesting';
+        $scope.response = '';
+        
+        var httpRequest = httpRequestHandler();
+        
+        httpRequest.then(function (data) {
+            $scope.status = 'Complete';
+            $scope.response = data.text;
+        
+        }, function (error) {
+            $scope.status = 'Error';
+            $scope.response = error;            
+        });
+        
+    };
+    
+});
+
+
+app.controller('TestcaseListCtrl', ['$scope','$http','$timeout', 
+                                    function ($scope,$http,$timeout) {
+	var url = window.location.href.split('/');
+	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+	$scope.init=function(userid){
+		
+		$scope.userid=userid;
+		//alert("sdgdsggsdgdsgds"+userid);
+		$scope.thing='default';
+		    $http.get(baseUrl+"web/devices").
+			 success(function(data) {
+			   $scope.devices=data;
+			   $scope.testcaseresults=data;
+			    }).error(function (data, status, headers, config) {
+			        alert("error");
+		});
+	};         	
+                                  $scope.apps='';
+                            	  $scope.testInput ='';
+                            	  $scope.username='';
+                            	 $scope.custom = false;	
+                            	 $scope.custom1 = true;	
+                            	 $scope.customdiv=true;
+                            	// $scope.devices = TestDeviceFactory.query();
+                            	//$scope.loader.loading = false;
+                            	 
+                            	$scope.loader = {
+                            			 loading: false,
+                            			 };
+                            	$scope.status = {
+                           			 loading: false,
+                           			 };
+                          	$scope.loader1 = {
+                           			 loading: false,
+                           			 };
+                           	$scope.status1 = {
+                          			 loading: false,
+                          			 };
+                           	$scope.getlogfile=function(name){
+                           		//alert("name");
+                                
+                	    		name=name.replace(/\//g,'slash');
+                	    		 
+                	    		mywindow=window.open('http://localhost:8082/ngdemo/web/devicetests/querydata1/'+name,"mywindow","menubar=1,resizable=1,width=800,height=700");
+                	    	};
+
+                            	 
+                            	 $scope.test=function(name){
+                            		 alert("name:::"+name);
+                            		 $scope.loader1.loading = true ;
+                            	    $http.get(baseUrl+"web/testcases/getalltestcases/"+name).
+                          			 success(function(data) {
+                          				$timeout(function() {
+                          			     console.log(data);
+                          			   $scope.devices=data;
+                          			   //alert("status:"+data.status);
+                          			   $scope.status1.loading = true ;
+                          			   $scope.loader1.loading = false ;
+                          			   return $scope.devices;},1000);
+                          			    }).error(function (data, status, headers, config) {
+                          			    	$timeout(function() {
+                          			        alert("error");
+                          			    	},1000);
+                          			  });
+                            	 };
+                            	$scope.texttest=function(){
+                           		 $scope.loader1.loading = true ;
+                           	    $http.get(baseUrl+"web/testcases/getalltexttestcases").
+                          			 success(function(data) {
+                          			     console.log(data);
+                          			   $scope.devices=data;
+                          			   //alert("status:"+data.status);
+                          			   $scope.status1.loading = true ;
+                          			   $scope.loader1.loading = false ;
+                          			   return $scope.devices;
+                          			    }).error(function (data, status, headers, config) {
+                          			        alert("error");
+                          		});
+                           	 };
+                            	$scope.runatestcase=function(device){
+                            			 alert(device.device);
+                            		     $http.get(baseUrl+"web/testcases/getatestcase/"+device.device).
+                            			 success(function(data) {
+                            			     console.log(data);
+                            			   //  alert(data);
+                            			     $scope.custom=false;
+                            			   location.reload(); 
+                            			     //   return data;
+                            			    }).error(function (data, status, headers, config) {
+                            			        alert("error");
+                            		});
+                            		
+                            	};
+                                    //    $scope.testcases = TestcasesFactory.query();
+                            	}]);
+
+app.controller('DevicesCtrl', ['$scope','$http', function($scope,$http) {
+
+	var url = window.location.href.split('/');
+	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+	
+	 $scope.sortType     = 'name'; // set the default sort type
+	  $scope.sortReverse  = false;  // set the default sort order
+	  $scope.searchDevice   = '';     // set the default search/filter term
+	  $scope.searchTestcase   = ''; 
+	  $scope.searchTestcaseResult   = '';
+	  $scope.userid='';
+	 
+	 $scope.myInterval = 3000;
+	  $scope.slides = [
+	   {
+	      image: 'http://lorempixel.com/400/200/'
+	    },
+	    {
+	      image: 'http://lorempixel.com/400/200/food'
+	    },
+	    {
+	      image: 'http://lorempixel.com/400/200/sports'
+	    },
+	    {
+	      image: 'http://lorempixel.com/400/200/people'
+	    }
+	  ];
+	$scope.devicemodel='';
+	$scope.devicename='';
+	$scope.testcaseset ='';
+$scope.init=function(userid){
+	$scope.userid=userid;
+	//alert("sdgdsggsdgdsgds"+userid);
+	  $scope.models = {
+		        selected: null,
+		        lists: {"A": [], "B": []}
+		    };
+
+		    // Generate initial model
+		    for (var i = 1; i <= 3; ++i) {
+		        $scope.models.lists.A.push({label: "Item A" + i});
+		        $scope.models.lists.B.push({label: "Item B" + i});
+		    }
+
+		    // Model to JSON for demo purpose
+		    $scope.$watch('models', function(model) {
+		        $scope.modelAsJson = angular.toJson(model, true);
+		    }, true);
+	$scope.thing='default';
+	    $http.get(baseUrl+"web/testcases").
+		 success(function(data) {
+		   $scope.testcases=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+	    $http.get(baseUrl+"web/devices").
+		 success(function(data) {
+		   $scope.devices=data;
+		   $scope.testcaseresults=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+	    $http.get(baseUrl+"web/devicetests/status").
+		 success(function(data) {
+		   $scope.testcaselists=data;
+		   //$scope.testcaseresults=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+	    $scope.setActive = function (name) {
+	    	  $scope.thing = name; }
+	    
+	    $scope.setTestcase = function (name) {
+	    	  $scope.testcaseset = name; 
+	    	  }
+	    
+	    	$scope.isActive = function (name) {
+	    	  return ($scope.thing == name); }
+	    	
+	    	$scope.getlogfile=function(name){
+	    		name=name.replace(/\//g,'slash');
+	    		mywindow=window.open('http://localhost:8082/ngdemo/web/devicetests/querydata1/'+name,"mywindow","menubar=1,resizable=1,width=800,height=700");
+	    	};
+	 };
+	 $scope.test=function(testname){
+     	
+		 alert("dsjjdjdff");
+		
+	    $http.get("http://localhost:8082/ngdemo/web/testcases/getalltexttestcases").
+			 success(function(data) {
+				 $scope.testcaseresults=data;
+				 alert(data);
+			 
+			    }).error(function (data, status, headers, config) {
+			        alert("ddshdhshhferror");
+		});
+		};
+	 
+
+	 $scope.showdetails= function(username)
+	   {
+		   $scope.username=username;
+	      window.open('partials/device-info.html?username='+$scope.username,'_blank');
+	   }
+	 $scope.showdevicedetails= function(username)
+	   {
+		   $scope.username=username;
+	      window.open('devicetest.jsp?username='+$scope.username,'_blank');
+	   }
+	 $scope.showapps= function(username)
+	   {
+		  // alert("username"+username);
+		   $scope.devname=username;
+	      mywindow= window.open('partials/App-List.html?username='+$scope.devname, "mywindow","menubar=1,resizable=1,width=600,height=300");
+	      mywindow.moveTo(750,500);
+	   }	
+	 
+	 $scope.reboot= function(username)
+	   {
+		   alert("username"+username);
+		   $scope.devname=username;
+	      mywindow= window.open('partials/App-List.html?username='+$scope.devname, "mywindow","menubar=1,resizable=1,width=600,height=300");
+	      mywindow.moveTo(750,500);
+	   }
+	  
+	$scope.installapk=function(device,file){
+		
+		//alert("device"+device);
+		//alert("file"+file);
+		$scope.device=device;
+		$scope.file=file;
+	
+		$http.get(baseUrl+"web/devices/install/"+$scope.device+ "/"+$scope.file).
+			 success(function(data) {
+				 //alert("success");
+			     console.log(data);
+			     alert(data);
+			        return data;
+			    }).error(function (data, status, headers, config) {
+			        alert("error");
+			       // return status;
+		});
+	}
+	
+	$scope.uploadFiles=function(device,file){
+		alert("device"+device);
+		alert("file"+file);
+		//var mystring = "this,is,a,test"  
+			var newchar = 'aaa';
+			file = file.split('/').join(newchar);
+			//alert("file::"+file);
+		$scope.device=device;
+		$scope.file=file;
+		$http.get(baseUrl+"web/devices/upload/"+$scope.device+ "/"+$scope.file).
+			 success(function(data) {
+				 alert("success");
+			     console.log(data);
+			     //alert(data);
+			        return data;
+			    }).error(function (data, status, headers, config) {
+			        alert("error");
+			       // return status;
+		});
+	}
+          // callback for ng-click 'editUser':
+          $scope.editDevice = function (userId) {
+              $location.path('/user-detail/' + userId);
+          };
+          
+          $scope.customNavigate=function(device){
+              window.location.assign("partials/device-info.html");
+           };
+	 
+	 var indexedDevices = [];
+	    
+	    $scope.devicesToFilter = function() {
+	        indexedDevices = [];
+	        return $scope.devices;
+	    }
+	    
+	    $scope.filterDevices = function(device) {
+	        var modelIsNew = indexedDevices.indexOf(device.model) == -1;
+	        if (modelIsNew) {
+	        	indexedDevices.push(device.model);
+	        }
+	        return modelIsNew;
+	    };
+	    
+	    $scope.today = function() {
+	          return $scope.dt = new Date();
+	        };
+	        $scope.today1 = function() {
+	            return $scope.dt1 = new Date();
+	          };
+	        $scope.today();
+	        $scope.today1();
+	        $scope.showWeeks = true;
+	        $scope.showWeeks1 = true;
+	        $scope.toggleWeeks = function() {
+	          return $scope.showWeeks = !$scope.showWeeks;
+	        };
+	        $scope.toggleWeeks1 = function() {
+	            return $scope.showWeeks1 = !$scope.showWeeks1;
+	          };
+	        $scope.clear = function() {
+	          return $scope.dt = null;
+	        };
+	        $scope.clear1 = function() {
+	            return $scope.dt1 = null;
+	          };
+	        $scope.disabled = function(date, mode) {
+	          return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+	        };
+	        $scope.disabled1 = function(date, mode1) {
+	            return mode1 === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+	          };
+	        $scope.toggleMin = function() {
+	          var _ref;
+	          return $scope.minDate = (_ref = $scope.minDate) != null ? _ref : {
+	            "null": new Date()
+	          };
+	        };
+	        $scope.toggleMin1 = function() {
+	            var _ref1;
+	            return $scope.minDate1 = (_ref = $scope.minDate1) != null ? _ref1 : {
+	              "null": new Date()
+	            };
+	          };
+	        $scope.toggleMin();
+	        $scope.toggleMin1();
+	        $scope.open = function($event) {
+	          $event.preventDefault();
+	          $event.stopPropagation();
+	          console.log('..');
+	          $scope.opened1 = false;
+	          return $scope.opened = true;
+	        };
+	        $scope.open1 = function($event) {
+	            $event.preventDefault();
+	            $event.stopPropagation();
+	            console.log('..');
+	            $scope.opened = false;
+	            return $scope.opened1 = true;
+	          };
+	        $scope.dateOptions = {
+	          'year-format': "'yy'",
+	          'starting-day': 1
+	        };
+	        //$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+	      //  return $scope.format = $scope.formats[0];
+	        return $scope.format ='yyyy/MM/dd';
+	 
+	 
+}]);
+
+//Daterange filter
+$scope.dateRangeFilter = function (property, startDate, endDate) {
+    return function (item) {
+        if (item[property] === null) return false;
+ 
+        var itemDate = moment(item[property]);
+        var s = moment(startDate, "DD-MM-YYYY");
+        var e = moment(endDate, "DD-MM-YYYY");
+ 
+        if (itemDate >= s && itemDate <= e) return true;
+        return false;
+    }
+};
+
+app.controller('CreateCtrl', ['$scope','$http', function($scope,$http) {
+	
+	 var url = window.location.href.split('/');
+	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+       $scope.name='';
+       $scope.role='';
+       $scope.designation='';
+       $scope.dept='';
+       $scope.msg='';
+       $scope.msgcheck='';
+       $scope.checkboxModel = {
+		       value1 : 'NO',
+		       value2 : 'NO'
+		     };
+       $scope.myTestcases = {
+    		    selected:{}
+    		};
+$scope.init=function(){
+	$scope.msgcheck=0;   
+	    $http.get(baseUrl+"web/users/depts").
+		 success(function(data) {
+			// alert("inside");
+		   $scope.departments=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+	    $http.get(baseUrl+"web/users/roles").
+		 success(function(data) {
+			// alert("inside");
+		   $scope.roles=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+	    $http.get(baseUrl+"web/users/designations").
+		 success(function(data) {
+			// alert("inside");
+		   $scope.designations=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+	    $http.get(baseUrl+"web/testcases/getdetails").
+		 success(function(data) {
+		   $scope.testcases=data;
+		    }).error(function (data, status, headers, config) {
+		        alert("error");
+	});
+}
+$scope.postdata=function(name,role,designation,dept,testcases,dashboard,mytests){
+    $http.get(baseUrl+"web/users/create/"+name+"/"+role.id+"/"+designation.id+"/"
+    		+dept.deptId+"/"+testcases+"/"+dashboard+"/"+mytests).
+	 success(function(data) {
+		$scope.msg=data;
+	    }).error(function (data, status, headers, config) {
+	        alert("error");
+	        $scope.msg=data;
+});
+};
+$scope.clearall=function(){
+	 $scope.name='';
+     $scope.role='';
+     $scope.designation='';
+     $scope.dept='';
+
+};
+	 
+}]);
+
+
+
+app.controller('MainController', 
+function ($scope) {
+$scope.items = [
+                    {
+                        name: "item1",
+                        desc: "Item 1",
+                        subitems: [
+                            {
+                                name: "subitem1",
+                                desc: "Sub-Item 1"
+                            },
+                            {
+                                name: "subitem2",
+                                desc: "Sub-Item 2"
+                            },
+                            {
+                                name: "subitem2",
+                                desc: "Sub-Item 2"
+                            }]
+                    },
+                    {
+                        name: "item2",
+                        desc: "Item 2",
+                        subitems: [
+                            {
+                                name: "subitem1",
+                                desc: "Sub-Item 1"
+                            },
+                            {
+                                name: "subitem2",
+                                desc: "Sub-Item 2"
+                            },
+                            {
+                                name: "subitem2",
+                                desc: "Sub-Item 2"
+                            }]
+                    },
+                    {
+                        name: "item3",
+                        desc: "Item 3",
+                        subitems: [
+                            {
+                                name: "subitem1",
+                                desc: "Sub-Item 1"
+                            },
+                            {
+                                name: "subitem2",
+                                desc: "Sub-Item 2"
+                            },
+                            {
+                                name: "subitem2",
+                                desc: "Sub-Item 2"
+                            }]
+                    }
+                ];
+
+$scope.default = $scope.items[2];
+});
+
+app.controller('ItemController', ['$scope', function (scope) {
+
+                scope.$parent.isopen = (scope.$parent.default === scope.item);
+
+                scope.$watch('isopen', function (newvalue, oldvalue, scope) {
+                    scope.$parent.isopen = newvalue;
+                });
+
+            }]);
+

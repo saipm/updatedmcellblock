@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     
-    public User getById(int id) {
+    public User getById(String id) {
         return this.userRepository.getById(id);
     }
 
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     
-    public void remove(int id) {
+    public void remove(String id) {
         this.userRepository.remove(id);
     }
 
@@ -48,4 +48,7 @@ public class UserServiceImpl implements UserService {
     public int getNumberOfUsers() {
         return this.userRepository.getNumberOfUsers();
     }
+
+
+
 }

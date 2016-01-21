@@ -1,0 +1,40 @@
+package com.test1;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.junit.Test;
+
+public class RunPhoneAgent {
+	
+	
+	@Test
+	 public void test() throws InterruptedException, IOException {
+		
+		
+		
+	    
+
+	        //adb shell am start -n com.example.setarehn.phage/.MainActivity
+	// adb install name.apk
+	//adb shell am force-stop com.example.setarehn.phage
+ 
+	        // run phone agent
+
+	  //     SampleJavaTest.javaShellScript("adb install app-debug(1).apk");
+
+
+	        Thread.sleep(2000);
+
+
+	        SampleJavaTest.javaShellScript("adb shell am start -n com.example.setarehn.phage/.MainActivity");
+
+	    
+		
+		
+		
+		
+		
+	}
+
+}

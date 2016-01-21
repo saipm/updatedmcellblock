@@ -1,5 +1,0 @@
-package ngdemo.service.contract;
-
-public interface TestcaseService {
-
-}

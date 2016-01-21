@@ -1,5 +1,0 @@
-package ngdemo.web.rest;
-
-public class SigninServlet {
-
-}

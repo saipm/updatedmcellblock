@@ -1,0 +1,32 @@
+<html>
+<head>
+ <style>
+ li {
+    display: inline;
+}
+    .moreinfo {
+    	  display: inline-block;
+    	} 
+    	TD{font-family: Arial;
+    	 font-size: 11pt;}
+    </style>
+    <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    
+    
+    <script type="text/javascript">
+    var deviceId;
+    var processed_json = new Array(); 
+    var processed_json1 = new Array();  
+    $( document ).ready(function() {
+        console.log( "document loaded" );	
+        	var pathname = window.location.pathname; // Returns path only
+        	var url      = window.location.href; 
+      deviceId = url.substr(url.indexOf("=") + 1);
+      document.getElementById("test").innerHTML=deviceId;
+      </script>
+      </head>
+      </html>
+      
+      

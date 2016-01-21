@@ -1,5 +1,0 @@
-package ngdemo.repositories.impl.mock;
-
-public class TestcaseMockRepositoryImpl {
-
-}

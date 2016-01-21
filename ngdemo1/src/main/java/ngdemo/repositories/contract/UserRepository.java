@@ -7,7 +7,7 @@ public interface UserRepository extends Repository<User> {
 
     User update(User user);
 
-    void remove(int id);
+    void remove(String id);
 
     int getNumberOfUsers();
 }

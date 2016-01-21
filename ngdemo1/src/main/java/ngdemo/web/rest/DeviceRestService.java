@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -89,6 +90,7 @@ public class DeviceRestService {
     	
     	System.out.println("adb devices");
     	String command = "adb devices";
+    	SampleJavaTest st = new SampleJavaTest();
 		List<Device> dlist = new ArrayList<Device>();
 		org.codehaus.jettison.json.JSONObject finalObject = new org.codehaus.jettison.json.JSONObject();
 		Process p;
@@ -106,9 +108,52 @@ public class DeviceRestService {
 			    }
 			}
 			for (String device : deviceList) {
+				String model=SampleJavaTest.getDeviceParameters(device);
+				String brand=SampleJavaTest.getDeviceBrand(device);
+				String version=SampleJavaTest.getDeviceVersion(device);
 				//System.out.println(device);
 				Device d = new Device();
 				d.setDevice(device);
+				d.setModel(model);
+				d.setBrand(brand.toUpperCase());
+				d.setVersion(version);
+			    dlist.add(d);
+			}
+	       
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return dlist;
+    }
+    
+    @GET
+    @Path("/brand/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Device> getAllDataInJSON() {
+    	
+    	System.out.println("adb devices");
+    	String command = "adb devices";
+		List<Device> dlist = new ArrayList<Device>();
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			String line="";
+			List<String> deviceList = new ArrayList<String>();
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((line = input.readLine()) != null) {
+			    if (line.endsWith("device")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    } if (line.endsWith("unauthorized")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    }
+			}
+			for (String device : deviceList) {
+				String brand=SampleJavaTest.getDeviceBrand(device);
+				//System.out.println(device);
+				Device d = new Device();
+				d.setDevice(device);
+				d.setModel(brand.toUpperCase());
 			    dlist.add(d);
 			}
 	       
@@ -170,18 +215,35 @@ public class DeviceRestService {
 	    	while ((line1 = rd.readLine()) != null) {
 	    		deviceList.add(line1);
 			}
-	    	for (String device : deviceList) {
+	    	/*for (String device : deviceList) {
 				System.out.println(device);
 				if(device.contains("model")||device.contains("version.sdk")||device.contains("manufacturer")
 						||device.contains("hardware")||device.contains("platform")
 						||device.contains("revision")||device.contains("product.name")
-						||device.contains("brand")){
+						||device.contains("brand")||device.contains("release")){
 					device = device.replace("[", "").replace("]", "").replace("ro.", "");
 				Data d1 = new Data();
 				d1.setData(device);
 			    data.add(d1);
 			}
+	    	}*/
+	    	List<String> d2= new ArrayList<String>();
+	    	for (String device : deviceList) {
+				//System.out.println(device);
+				if(device.contains("model")
+						||device.contains("brand")||device.contains("build.version.release")){
+					device = device.replace("[", "").replace("]", "").replace("ro.", "");
+				Data d1 = new Data();
+				d2.add(device.split(":")[1]);
+				d1.setData(device);
+			    data.add(d1);
+			    System.out.println("d2+"+d2);
+			}
 	    	}
+	    	Device d3= new Device();
+	    	d3.setDevice(deviceId);
+	    	d3.setVersion(d2.get(0));
+	    	//d3.setBrand(d3.get);
 	    	} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -331,7 +393,59 @@ public class DeviceRestService {
 		}
     	return line1;
     }
+    
+    @GET
+    @Path("/reboot/{device}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String reboot(@PathParam("device") String device) throws IOException, InterruptedException {
+    	
+    	//System.out.println("adb -s TA93304LE5 shell dumpsys battery");
+    	String command = "adb -s "+device+" reboot";
+    	System.out.println("device::::::"+device);
+		List<App> dlist = new ArrayList<App>();
+		String line1="";
+		Process p;
+			p = Runtime.getRuntime().exec("adb -s "+device+" reboot");
+			p.waitFor();
+			line1="Rebooting.....";
+    	return line1;
+    }
 
+    @GET
+    @Path("/storage/{device}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<String> getStorageinfo(@PathParam("device") String device) {
+    	List<String> st = new ArrayList<String>();
+    	System.out.println("adb -s TA93304LE5 shell dumpsys devicestoragemonitor");
+    	String command = "adb -s "+device+" shell dumpsys devicestoragemonitor";
+    	StringBuffer sb = new StringBuffer("");
+		List<App> dlist = new ArrayList<App>();String line1="";
+		org.codehaus.jettison.json.JSONObject finalObject = new org.codehaus.jettison.json.JSONObject();
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			
+			List<String> deviceList = new ArrayList<String>();
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((line1 = input.readLine()) != null) {
+				 if(line1.contains("mFreeMem=")){
+					 sb.append(line1);
+				 }
+				}
+			String data = sb.toString();
+			
+			st.add((data.split("\\s+")[2]).split("=")[1]);
+			st.add((data.split("\\s+")[1]).split("=")[1]);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return st;
+    }
+
+    
+    
     @GET
     @Path("/run/{device}/{file}")
    // @Produces(MediaType.APPLICATION_JSON)

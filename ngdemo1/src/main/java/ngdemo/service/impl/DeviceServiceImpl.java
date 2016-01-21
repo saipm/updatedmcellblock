@@ -22,7 +22,7 @@ public class DeviceServiceImpl implements DeviceService {
         return this.deviceRepository.getAll();
     }
 
-    public Device getById(int id) {
+    public Device getById(String id) {
         return this.deviceRepository.getById(id);
     }
 
@@ -42,4 +42,6 @@ public class DeviceServiceImpl implements DeviceService {
     public int getNumberOfDevices() {
         return this.deviceRepository.getNumberOfDevices();
     }
+
+
 }

@@ -1,0 +1,11 @@
+package ngdemo.domain;
+
+public class Packet {
+	
+	private String ReceivedNo;
+	private String ReceivedBytes;
+	private String SentNo;
+	private String SentBytes;
+	private String Latency;
+
+}

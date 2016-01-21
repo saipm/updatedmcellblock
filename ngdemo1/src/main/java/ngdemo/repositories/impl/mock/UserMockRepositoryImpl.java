@@ -19,7 +19,7 @@ public class UserMockRepositoryImpl extends GenericMockRepository<User> implemen
         this.users = this.createUsers();
     }
 
-    public User getById(int id) {
+    public User getById1(String id) {
         for (User u : this.users) {
             if (u.getId() == id) {
                 return u;
@@ -33,17 +33,17 @@ public class UserMockRepositoryImpl extends GenericMockRepository<User> implemen
     }
 
      
-    public User create(User user) {
+ /*   public User create(User user) {
         user.setId(getCurrentMaxId() + 1);
         this.users.add(user);
         return user;
-    }
+    }*/
 
      
     public User update(User user) {
-        User byId = this.getById(user.getId());
-        byId.setFirstName(user.getFirstName());
-        byId.setLastName(user.getLastName());
+        User byId = this.getById1(user.getId());
+        byId.setName(user.getName());
+      //  byId.setLastName(user.getLastName());
         return byId;
     }
 
@@ -62,15 +62,15 @@ public class UserMockRepositoryImpl extends GenericMockRepository<User> implemen
         int numberOfUsers = 10;
         for (int i = 0; i < numberOfUsers; i++) {
             User user = new User();
-            user.setId(i + 1);
-            user.setFirstName("Foo" + (i + 1));
-            user.setLastName("Bar" + (i + 1));
+            user.setId(i + "1");
+            user.setName("Foo" + (i + 1));
+           // user.setLastName("Bar" + (i + 1));
             this.users.add(user);
         }
         return this.users;
     }
 
-    private int getCurrentMaxId() {
+ /*   private int getCurrentMaxId() {
         Ordering<User> ordering = new Ordering<User>() {
              
             public int compare(User left, User right) {
@@ -78,5 +78,23 @@ public class UserMockRepositoryImpl extends GenericMockRepository<User> implemen
             }
         };
         return ordering.max(this.users).getId();
-    }
+    }*/
+
+	@Override
+	public User getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void remove(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public User create(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

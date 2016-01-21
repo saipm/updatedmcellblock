@@ -12,9 +12,12 @@ $( document ).ready(function() {
     	var pathname = window.location.pathname; // Returns path only
     	var url      = window.location.href; 
   deviceId = url.substr(url.indexOf("=") + 1);
+  
+  var url = window.location.href.split('/');
+  var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
 
  var select = document.getElementById("rec_mode");
-  $.getJSON("http://localhost:8082/ngdemo/web/devices/apps/"+deviceId, function(result) {
+  $.getJSON(baseUrl+"web/devices/apps/"+deviceId, function(result) {
 	  	  for(index in result) {
 	      select.options[select.options.length] = new Option(result[index].app, result[index].app);
 	  }
@@ -23,7 +26,7 @@ $( document ).ready(function() {
 
 function RunFunction() {
 	var run_app = document.getElementById("rec_mode").value;
-	$.get("http://localhost:8082/ngdemo/web/devices/run/"+deviceId+"/"+run_app, function(data){
+	$.get(baseUrl+"web/devices/run/"+deviceId+"/"+run_app, function(data){
 		//$('#demo').html(data);
 		alert("data"+data);
 	var run=data;
@@ -33,7 +36,7 @@ function RunFunction() {
 
 function UninstallFunction() {
 	var uninstall_app = document.getElementById("rec_mode").value;
-	$.get("http://localhost:8082/ngdemo/web/devices/uninstall/"+deviceId+"/"+uninstall_app, function(data){
+	$.get(baseUrl+"web/devices/uninstall/"+deviceId+"/"+uninstall_app, function(data){
 		//$('#demo').html(data);
 		alert("data"+data);
 	var run=data;

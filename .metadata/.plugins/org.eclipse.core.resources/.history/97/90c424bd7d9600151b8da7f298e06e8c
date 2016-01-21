@@ -1,5 +1,0 @@
-package ngdemo.repositories.contract;
-
-public interface TestCaseRepository {
-
-}

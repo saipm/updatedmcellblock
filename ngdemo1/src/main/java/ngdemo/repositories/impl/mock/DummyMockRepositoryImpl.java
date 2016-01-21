@@ -8,8 +8,14 @@ public class DummyMockRepositoryImpl extends GenericMockRepository<User> impleme
     
     public User getDefaultUser() {
         User user = new User();
-        user.setFirstName("JonFromREST");
-        user.setLastName("DoeFromREST");
+        user.setName("JonFromREST");
+       // user.setLastName("DoeFromREST");
         return user;
     }
+
+	@Override
+	public User getById(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

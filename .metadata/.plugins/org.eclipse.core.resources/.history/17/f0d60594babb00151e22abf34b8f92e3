@@ -1,0 +1,13 @@
+<html ng-app="myApp">
+<head>
+  <script src="angular.js"></script>
+    <script src="ui-bootstrap-tpls-0.10.0.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css"> 
+    <script src="date.js"></script>
+    <!-- <script src="js/controllers.js"></script>
+    <script type="text/javascript"> -->
+</head>
+<div ng-controller="MyCtrl">
+    datepicker: <input calendar ng-model='something' />
+</div>
+</html>

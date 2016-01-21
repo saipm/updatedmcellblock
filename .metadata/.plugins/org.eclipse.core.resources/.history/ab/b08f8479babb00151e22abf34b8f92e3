@@ -1,0 +1,5 @@
+<html ng-app="myApp">
+<div ng-controller="MyCtrl">
+    datepicker: <input calendar ng-model='something' />
+</div>
+</html>

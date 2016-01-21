@@ -1,0 +1,57 @@
+package ngdemo.web.rest;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class ServerPhoneAgentRun {
+	
+	
+
+
+    public void runPhoneAgent() throws InterruptedException {
+
+    }
+
+
+
+    public void stopPhoneAgent() throws IOException, InterruptedException
+    {
+       
+       SampleJavaTest.javaShellScript("adb shell am force-stop com.example.setarehn.phage");
+       
+       System.out.println("phone agent is stopped !");
+    }
+    
+
+    public void runTestCase() throws IOException
+    {
+    	System.out.println("*************************&&&&&&&&&&&&&&&&&&");
+    String textPath="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./textMessages.sh ";
+    	String s = "1a5dacc6";
+    	 try {
+			SampleJavaTest.javaShellScript(textPath+s+" "+"+16419808211"+" "+"Hellooo");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	 	 
+    }
+
+
+    public void setResultInDataBase(String numberOfRXPkts , String numberOfTXPkts , String bytesOfRXPkts , String bytesOfTXPkts , String latency)
+
+    {
+         System.out.println("Result .....Set");
+
+
+    }
+}
+
+	
+	
+
+

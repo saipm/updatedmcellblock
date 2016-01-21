@@ -1,0 +1,43 @@
+package ngdemo.domain;
+
+public class Packet {
+	
+	private String ReceivedNo;
+	private String ReceivedBytes;
+	private String SentNo;
+	private String SentBytes;
+	private String Latency;
+	public String getReceivedNo() {
+		return ReceivedNo;
+	}
+	public void setReceivedNo(String receivedNo) {
+		ReceivedNo = receivedNo;
+	}
+	public String getReceivedBytes() {
+		return ReceivedBytes;
+	}
+	public void setReceivedBytes(String receivedBytes) {
+		ReceivedBytes = receivedBytes;
+	}
+	public String getSentNo() {
+		return SentNo;
+	}
+	public void setSentNo(String sentNo) {
+		SentNo = sentNo;
+	}
+	public String getSentBytes() {
+		return SentBytes;
+	}
+	public void setSentBytes(String sentBytes) {
+		SentBytes = sentBytes;
+	}
+	public String getLatency() {
+		return Latency;
+	}
+	public void setLatency(String latency) {
+		Latency = latency;
+	}
+	
+	
+
+}

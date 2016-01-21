@@ -1,0 +1,55 @@
+<html ng-app="dateTimePickerTest">
+  <head>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://rawgit.com/dalelotts/angular-bootstrap-datetimepicker/master/src/css/datetimepicker.css" />
+    
+    <!-- Scripts -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"></script>    
+    <script src="http://code.angularjs.org/1.2.18/angular.min.js"></script>        
+    <script src="https://rawgit.com/dalelotts/angular-bootstrap-datetimepicker/master/src/js/datetimepicker.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>    
+    <style>
+    .pad { padding: 25px; }
+    </style>
+  </head>
+  
+  <body ng-controller="MyController" class="pad">
+        
+    <h2> ui.bootstrap.datetimepicker</h2>
+    <!-- ui.bootstrap.datetimepicker (Dropdown Datetime with input box) -->  
+    <div class="dropdown">
+        <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="">    
+            <div class="input-group">
+              <input type="text" class="form-control" data-ng-model="data.date">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+            </div>    
+        </a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+            <datetimepicker data-ng-model="data.date"
+                            data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }">
+            </datetimepicker>
+        </ul>
+    </div>
+          
+    <br/><br/>
+    <h2>ui.bootstrap.dropdown</h2>
+    <!-- ui.bootstrap.dropdwon simple example -->  
+    <div class="btn-group" dropdown is-open="status.isopen">
+      <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+        Button dropdown <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li><a href="#">Action</a></li>
+        <li><a href="#">Another action</a></li>
+        <li><a href="#">Something else here</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Separated link</a></li>
+      </ul>
+    </div>
+    
+  </body>
+</html>

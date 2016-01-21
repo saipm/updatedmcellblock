@@ -1,0 +1,174 @@
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"  
+        pageEncoding="ISO-8859-1" import="java.util.*,javax.sql.*,java.sql.*,java.awt.*,java.io.*"%> 
+<html lang="en">
+<head>
+<style>
+body{
+color:"white";
+}
+</style>
+<style>
+
+ 
+  nav {
+  margin: 20px;
+}  
+ 
+ ul {
+  /* //overflow: auto; */
+  list-style-type: none;
+}
+
+li {
+  height: 15px;
+  float: left;
+  margin-right: 0px;
+  border-right: 1px solid #aaa;
+  padding: 0 10px;
+}
+ 
+li:last-child {
+  border-right: none;
+}
+ 
+li a {
+  text-decoration: none;
+  color: #3399ff;
+  font: 15px/1 Helvetica, Verdana, sans-serif;
+  font-color:#3399ff;
+  text-transform: uppercase;
+ 
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+ 
+li a:hover {
+  color: #666;
+}
+ 
+li.active a {
+  font-weight: bold;
+  color: #333;
+}
+</style>
+ <style>
+    .moreinfo {
+    	  display: inline-block;
+    	} 
+    	TD{font-family: Arial;
+    	 font-size: 11pt;}
+    </style>
+  
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+     
+     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript">
+    $( document ).ready(function() {
+    	 var processed_json = new Array();
+    	 var processed_json1 = new Array(); 
+    $.getJSON('http://localhost:8082/ngdemo/web/devicetests/devicecount/', function(data) {
+    	var out=data;
+    document.getElementById("devicecount").innerHTML="  "+out;
+    });
+    
+    $.getJSON('http://localhost:8082/ngdemo/web/devicetests/testcount/', function(data) {
+    	var out=data;
+    document.getElementById("testcount").innerHTML="  "+out;
+    });
+    
+   
+    
+    });
+    
+  
+    </script>
+<style type="text/css" media="screen">
+            #carbonads {
+              padding: 20px;
+            }
+
+            #carbonads .carbon-img {
+              clear: both;
+              float: left;
+              background: #fff;
+              padding: 10px;
+            }
+
+            #carbonads .carbon-img img {
+              display: block;
+            }
+
+            #carbonads .carbon-text {
+              clear: both;
+              display: block;
+              padding: 10px 0;
+            }
+
+            #carbonads .carbon-poweredby {
+              display: block;
+              color: #ADB0BA;
+              font-size: .9em;
+            }
+          </style>
+
+    <title> MCELLBLOCK</title>
+    <!--REQUIRED STYLE SHEETS-->
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLE CSS -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+   <!--  ANIMATED FONTAWESOME STYLE CSS -->
+    <!-- <link href="assets/css/font-awesome-animation.css" rel="stylesheet" />  -->
+     <link href="css/session.css" rel="stylesheet" /> 
+    <link href="css/elusive-webfont.css" rel="stylesheet" />
+    <link href="css/pagesnew.css" rel="stylesheet" />
+    <link href="css/sunburst.css" rel="stylesheet" />
+       <!-- CUSTOM STYLE CSS -->
+    <!-- <link href="assets/css/style.css" rel="stylesheet" /> -->
+    <!-- GOOGLE FONT -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="sidebarWrap">
+        <div id="sidebar">
+          <ul class="commonNav" id="side-nav">
+          </ul> <!-- /commonNav -->
+          
+  
+<div class="segment">
+  
+</div>
+       
+        </div>
+      </div>  
+    
+      <div class="contentWrap">
+        <div id="content">
+          <header>
+          </header>
+          <div id="body">
+ <div class="blankslate">
+    </div> <!-- /blankslate -->
+      </div> <!-- /body -->
+        </div> <!-- /content -->
+      </div> <!-- /contentWrap -->
+
+<script src="js/bootstrap/bootstrap.js"></script>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-resource.js"></script>
+
+<!-- AngularJS App Code ==================================================== -->
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+<script src="js/highcharts.js"></script>
+</body>
+</html>

@@ -146,6 +146,9 @@ In production use:
  /*  background:#567; */
   font-family:'Open Sans',sans-serif;
 }
+html, body{
+    background-color: white;
+}
 
 tr.spaceUnder > td
 {
@@ -156,15 +159,22 @@ tr.spaceUpper > td
 {
   padding-top: 1em;
 }
+h4 { color: #0059b3; font-family: 'Lato', serif; font-size: 20px; font-weight: Normal; line-height: 48px; margin: 0; }
    </style> 
-
+<title>MCELLBLOCK</title>
 </head>
 
- <body ng-app="ngdemo.controllers"> 
+ <body ng-app="ngdemo.controllers" bg-color="white"> 
     <div id="header">
         <div id="actions">
   </br></br></br></br>
 <div align="center" class="span12" ng-controller="DeviceListCtrl"> 
+<div align="center">
+<h4 align="left"><!-- <img src="img/bootstrap/mobile-integration-workgroup-squarelogo.png" border="0" alt="MIW" style="margin-bottom:'0px';height:60px;width:'60px;'"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Number of devices connected:{{devices.length}}</h4>
+</br></br>
+</div>
     <table  class="table table-striped table-condensed" >
       <!--   <thead>
         <tr>
@@ -183,7 +193,21 @@ tr.spaceUpper > td
        <td>
        <input type="hidden" ng-init="init(device.device)" ng-model="device.device">
        </td>
-        <td>  <a ng-click="showdetails(device.device)" class=" btn glyphicon glyphicon-phone">{{ device.device }}</a></td>
+       <td>
+       <div ng-show="device.model=='XT1033'">
+       <img src="img/bootstrap/150px-MotoG.png" border="0" alt="MIW" style="margin-bottom:'0px';height:80px;width:'80px;'"/>
+       </div>
+        <div ng-show="device.model=='SAMSUNG-SGH-I337'">
+       <img src="img/bootstrap/ss.jpeg" border="0" alt="MIW" style="margin-bottom:'0px';height:80px;width:'80px;'"/>
+       </div>
+       <div ng-show="device.model==''">
+       <img src="img/bootstrap/unnamed.png" border="0" alt="MIW" style="margin-bottom:'0px';height:80px;width:'80px;'"/>
+       </div>
+       </td>
+        <td>  <a ng-click="showdetails(device.device)" class=" btn glyphicon glyphicon-phone">
+        <span ng-if="device.model==null">{{device.device}} </span>
+      </br></br>  <span ng-if="device.model!=null">{{device.model}} </span>
+       </a></td>
         
             <td></td><td></td><td></td><td></td>
             <td>
@@ -196,15 +220,15 @@ tr.spaceUpper > td
            </td>
              <!-- <td><a ng-click="runselect(device.device,test)" class="btn btn-small btn-primary">Run</a></td> -->
              <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-             <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+         <!--     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td> -->
              <td>  <a ng-click="showapps(device.device)" class="btn glyphicon glyphicon-expand btn-primary">Applications</a></td>
              <td></td>
-               <td>
+          <!--      <td>
             <label style="margin-left:40px;" class="switch switch-flat">
     	    	<input class="switch-input" type="checkbox" />
     	        	<span class="switch-label" data-on="On" data-off="Off"></span> 
     	        	<span class="switch-handle"></span> 
-    	        </label></td>
+    	        </label></td> -->
     	        <td>
     	        </td>
     	        <td></td><td></td><td></td>

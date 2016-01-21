@@ -7,7 +7,16 @@ public class Status {
 	private String userid;
 	private String status;
 	private String errormsg;
+	private String Date;
+	private String time;
+	private String logpath;
 	
+	public String getLogpath() {
+		return logpath;
+	}
+	public void setLogpath(String logpath) {
+		this.logpath = logpath;
+	}
 	public String getTestcase() {
 		return testcase;
 	}
@@ -22,6 +31,18 @@ public class Status {
 	}
 	public String getStatus() {
 		return status;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
+	public String getDate() {
+		return Date;
+	}
+	public void setDate(String date) {
+		Date = date;
 	}
 	public void setStatus(String status) {
 		this.status = status;

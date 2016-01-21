@@ -1,0 +1,178 @@
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<base target='_parent' />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() { 
+var processed_json = new Array(); 
+var url = window.location.href.split('/');
+  var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+$.getJSON(baseUrl+'web/devices', function(data) {
+	var out="<ul>";
+	 for(var i=0;i<data.length;i++){
+	out=out+"<li><a"+" href="+"devicetest.jsp"+" class="+"btn btn-default"+">"+data[i].device+"</a></li></br>";
+	 }
+	 out=out+"</ul>";
+	 document.getElementById("test1").innerHTML=out;
+});
+$.getJSON(baseUrl+'web/testcases', function(data) {
+	var out="<ul>";
+	 for(var i=0;i<data.length;i++){
+	//alert(data[i].testcase+"data");
+		 out=out+"<li><a data-toggle="+"modal"+" href="+"#normalModal"+" class="+"btn btn-default"+">"+data[i].testcase+"</a></li></br>";
+	 }
+	 out=out+"</ul>";
+	 document.getElementById("test3").innerHTML=out;
+});
+	$('#selectdiv').children().hide();
+    $(test1).show();
+    $(".modal-wide").on("show.bs.modal", function() {
+  	  var height = $(window).height() - 200;
+  	//  $(this).find(".modal-body").css("max-height", height);
+  	});
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+function clicked1(id){
+	$('#selectdiv').children().hide();
+	 $(test1).show();
+}
+function clicked2(id){
+	$('#selectdiv').children().hide();
+	 $(test2).show();
+}
+function clicked3(id){
+	$('#selectdiv').children().hide();
+	 $(test3).show();
+}
+function clicked4(id){
+	$('#selectdiv').children().hide();
+	 $(test4).show();
+}
+function clicked5(id){
+	$('#selectdiv').children().hide();
+	 $(test5).show();
+}
+function clicked6(id){
+	$('#selectdiv').children().hide();
+	 $(test6).show();
+}
+function clicked7(id){
+	$('#selectdiv').children().hide();
+	 $(test7).show();
+}
+
+
+</script>
+<link href="assets/css/bootstrap.css" rel="stylesheet" />
+<link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+<link href="css/session.css" rel="stylesheet" /> 
+<link href="css/elusive-webfont.css" rel="stylesheet" />
+<link href="css/pages.css" rel="stylesheet" />
+<link href="css/sunburst.css" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<style>
+.modal.modal-wide .modal-dialog {
+  width: 90%;
+}
+.modal-wide .modal-body {
+  overflow-y: auto;
+}
+
+/* irrelevant styling */
+body { text-align: center; }
+body p { 
+  max-width: 400px; 
+  margin: 20px auto; 
+}
+#tallModal .modal-body p { margin-bottom: 900px }
+ul {
+    padding-left: 15px;
+}
+ul li {
+    height:30px;
+    line-height: 25px;
+    
+    cursor:pointer;
+}
+ul li:hover {
+    background-color: #63B0C3;
+  /*   color:white; */
+}
+span {
+    position:relative;
+    top:2px;
+    left:4px;
+}
+ul li:hover {background: linear-gradient( #666666,  #d9d9d9);}
+/* li li span:hover {background:yellow} */
+span{
+font-family: ubuntu;
+font-size:13.5px;
+}
+nav ul{height:200px; width:18%;}
+nav ul{overflow:hidden; overflow-y:scroll;}
+.divborder{
+border: 0.5px solid #e6e6e6;height:25px;background-color: #4d4d4d;color: #e6e6e6;
+}
+/* height: 580px; */
+#devices { width:230px; background:white;float:left;border: 1px solid #e6e6e6;border-radius:1px; cursor:pointer;}
+#selectdiv{height:332px;  overflow: hidden; cursor:pointer;}
+</style>
+</head>
+<body>
+<span id="devices">
+<div id="devices1" onclick="clicked1(this);" style="margin-bottom:4px;border: 1px solid #e6e6e6;height:25px;background-color: #4d4d4d;color: #e6e6e6;"><b>&nbsp;Devices</b></div>
+<div id="selectdiv" style="overflow-y:auto;"> <!-- style="margin-bottom:332px;" -->
+<div id="test1">
+test1
+</div>
+<div id="test2">
+test2
+</div>
+<div id="test3">
+test3
+</div>
+<div id="test4">
+test4
+</div>
+<div id="test5">
+test5
+</div>
+<div id="test6">
+test6
+</div>
+<div id="test7">
+test7
+</div>
+</div>
+<div id="groups" onclick="clicked2(this);" class="divborder">&nbsp;Groups</div>
+<div id="testing" onclick="clicked3(this);" class="divborder">&nbsp;Testing/Tests</div>
+<div id="reporting" onclick="clicked4(this);"  class="divborder">&nbsp;Reporting</div>
+<div id="admin" onclick="clicked5(this);" onclick="clicked(this);" class="divborder">&nbsp;Admin</div>
+<div id="stats" onclick="clicked6(this);" class="divborder">&nbsp;Statistics</div>
+<div id="help" onclick="clicked7(this);" class="divborder">&nbsp;Help</div>
+</span>
+</body>
+<script src="js/bootstrap/bootstrap.js"></script>
+
+<script src="lib/angular/angular.js"></script>
+<script src="lib/angular/angular-resource.js"></script>
+
+<!-- AngularJS App Code ==================================================== -->
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/directives.js"></script>
+<script src="js/highcharts.js"></script>
+</html>

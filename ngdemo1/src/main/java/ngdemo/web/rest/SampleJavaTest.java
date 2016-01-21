@@ -22,6 +22,7 @@ private static String APPIUMSERVERSTARTUID="/home/saisreem/.npm-packages/lib/nod
 private static String LOGS="/home/saisreem/workspace/junittest/logs/";
 private static String ADBDEVICES="adb devices";
 private static String JAVASCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./javatest.sh";
+private static String MainSCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./mainjava.sh";
 private static String JAVAMSCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./javaMtest.sh";
 
 public static void startAppiumServer(String APPIUMSERVERSTARTUID) throws IOException, InterruptedException {
@@ -46,6 +47,34 @@ public static String getDeviceParameters(String deviceId) throws IOException, In
    	}
    	return device;
 }
+
+public static String getDeviceBrand(String deviceId) throws IOException, InterruptedException {
+    Runtime runtime = Runtime.getRuntime();
+    deviceProcess = runtime.exec("adb -s "+deviceId+" shell getprop ro.product.brand");
+    deviceProcess.waitFor();
+   // Thread.sleep(5000);
+    String line="",device="";
+    BufferedReader input = new BufferedReader(new InputStreamReader(deviceProcess.getInputStream()));
+   	while ((line = input.readLine()) != null) {
+   		device=line;
+   	}
+   	return device;
+}
+
+public static String getDeviceVersion(String deviceId) throws IOException, InterruptedException {
+    Runtime runtime = Runtime.getRuntime();
+    deviceProcess = runtime.exec("adb -s "+deviceId+" shell getprop ro.build.version.release");
+    deviceProcess.waitFor();
+   // Thread.sleep(5000);
+    String line="",device="";
+    BufferedReader input = new BufferedReader(new InputStreamReader(deviceProcess.getInputStream()));
+   	while ((line = input.readLine()) != null) {
+   		device=line;
+   	}
+   	return device;
+}
+
+
 
 public static String javaShellScript(String script) throws IOException, InterruptedException {
     Runtime runtime = Runtime.getRuntime();
@@ -99,8 +128,8 @@ public static void main(String args[]) throws IOException, InterruptedException 
 	List<String> deviceList = new ArrayList<String>();
     
     deviceList=SampleJavaTest.getDevicesList();
-  /*  for(String deviceId : deviceList){
-     	startAppiumServer(APPIUMSERVERSTARTUID+deviceId);
+   for(String deviceId : deviceList){
+     	startAppiumServer(APPIUMSERVERSTARTUID+deviceId+" -p 4007");
         Thread.sleep(2000);
     	System.out.println("Device Id: "+deviceId);
     	System.out.println("Device Model: "+getDeviceParameters(deviceId));
@@ -111,7 +140,7 @@ public static void main(String args[]) throws IOException, InterruptedException 
     	javaShellScript(JAVASCRIPT);
     	}
     	stopAppiumServer();
-    }*/
+    }
 	}
    
 }
