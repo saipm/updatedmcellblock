@@ -8,6 +8,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import ngdemo.domain.App;
+import ngdemo.domain.Device;
 import ngdemo.domain.Status;
 import ngdemo.domain.Testcase;  
       
@@ -279,6 +281,157 @@ import ngdemo.domain.Testcase;
              }  
              return counts;  
          } 
+    	 
+    	 public static List<Integer> getnewTypeTestcasesCount(String testcase) {   
+    		 int count=0;
+    		 int count1=0;
+    		 int count2=0;
+    		 int count3=0;
+             boolean status = false;  
+             Connection conn = null;  
+             PreparedStatement pst = null;  
+             PreparedStatement pst1 = null;
+             PreparedStatement pst2 = null; 
+             PreparedStatement pst3 = null; 
+             ResultSet rs = null;  
+             ResultSet rs1 = null;  
+             ResultSet rs2 = null;  
+             ResultSet rs3 = null;  
+             List<Testcase> tc = new ArrayList<Testcase>();
+             List<Integer> counts = new ArrayList<Integer>();
+       
+             String url = "jdbc:mysql://localhost:3306/";  
+             String dbName = "mcellblock";  
+             String driver = "com.mysql.jdbc.Driver";  
+             String userName = "root";  
+             String password = "password";  
+             try {  
+                 Class.forName(driver).newInstance();  
+                 conn = DriverManager  
+                         .getConnection(url + dbName, userName, password);  
+       
+                 pst = conn  
+                         .prepareStatement("SELECT COUNT(*) FROM MastTestcaseLogs where status='Pass' and testcaseid= ? ;");  
+                 
+                 pst.setString(1, testcase);
+                 rs = pst.executeQuery();  
+                 if (rs.next()) {
+                     count= rs.getInt(1);
+                     System.out.println("Count= " + count);
+                   } 
+       
+                 pst3 = conn  
+                         .prepareStatement("SELECT COUNT(*) FROM MastTestcaseLogs where status='Fail' and testcaseid= ? ;");
+
+                 pst3.setString(1, testcase);
+       
+                 rs3 = pst3.executeQuery();  
+                 if (rs3.next()) {
+                     count3= rs3.getInt(1);
+                     System.out.println("Count= " + count3);
+                   } 
+               counts.add(count);
+               counts.add(count3);
+               
+             } catch (Exception e) {  
+                 System.out.println(e);  
+             } finally {  
+                 if (conn != null) {  
+                     try {  
+                         conn.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+                 if (pst != null) {  
+                     try {  
+                         pst.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+                 if (rs != null) {  
+                     try {  
+                         rs.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+             }  
+             return counts;  
+         } 
+    	 
+    	 
+    	 public static List<App> getDateResults(String testcase, String statustest) {   
+    		 int count=0;
+    		 int count1=0;
+    		 int count2=0;
+    		 int count3=0;
+             boolean status = false;  
+             Connection conn = null;  
+             PreparedStatement pst = null;  
+             PreparedStatement pst1 = null;
+             PreparedStatement pst2 = null; 
+             PreparedStatement pst3 = null; 
+             ResultSet rs = null;  
+             ResultSet rs1 = null;  
+             ResultSet rs2 = null;  
+             ResultSet rs3 = null;  
+             List<Testcase> tc = new ArrayList<Testcase>();
+             List<App> counts = new ArrayList<App>();
+       
+             String url = "jdbc:mysql://localhost:3306/";  
+             String dbName = "mcellblock";  
+             String driver = "com.mysql.jdbc.Driver";  
+             String userName = "root";  
+             String password = "password";  
+             try {  
+                 Class.forName(driver).newInstance();  
+                 conn = DriverManager  
+                         .getConnection(url + dbName, userName, password);  
+       
+                 pst = conn  
+                         .prepareStatement("SELECT left(date,10),count(*)  FROM  MastTestcaseLogs where left(date,10) between '2016/01/01' and '2016/01/30' and testcaseid= ? and status= ? group by left(date,10)");  
+                 
+                 pst.setString(1, testcase);
+                 pst.setString(2, statustest);
+                 rs = pst.executeQuery();  
+                 while (rs.next()) {
+                	 App app = new App();
+                	 app.setApp(rs.getString(1));
+                	 app.setDevice(rs.getString(2));
+                     counts.add(app);
+                   } 
+       
+                
+               
+             } catch (Exception e) {  
+                 System.out.println(e);  
+             } finally {  
+                 if (conn != null) {  
+                     try {  
+                         conn.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+                 if (pst != null) {  
+                     try {  
+                         pst.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+                 if (rs != null) {  
+                     try {  
+                         rs.close();  
+                     } catch (SQLException e) {  
+                         e.printStackTrace();  
+                     }  
+                 }  
+             }  
+             return counts;  
+         } 
     	 public static int getTestcasesCount() {   
     		 int count=0;
              boolean status = false;  
@@ -505,6 +658,69 @@ import ngdemo.domain.Testcase;
             }  
             return status;  
         }  
+        
+        public static Device getDeviceDetails(String deviceId) {          
+            boolean status = false;  
+            Connection conn = null;  
+            PreparedStatement pst = null;  
+            ResultSet rs = null;  
+            Device d = new Device();
+      
+            String url = "jdbc:mysql://localhost:3306/";  
+            String dbName = "mcellblock";  
+            String driver = "com.mysql.jdbc.Driver";  
+            String userName = "root";  
+            String password = "password";  
+            try {  
+                Class.forName(driver).newInstance();  
+                conn = DriverManager  
+                        .getConnection(url + dbName, userName, password);  
+      
+                pst = conn  
+                        .prepareStatement("select * from MastDeviceData where DeviceId = ? ");  
+                pst.setString(1, deviceId);  
+      
+                rs = pst.executeQuery();  
+                
+                while(rs.next()){
+                	d.setDevice(rs.getString("DeviceId"));
+                	d.setModel(rs.getString("Model"));
+                	d.setBrand(rs.getString("Brand"));
+                	d.setVersion(rs.getString("Version"));
+                	d.setStatus(rs.getString("Status"));
+                }
+      
+            } catch (Exception e) {  
+                System.out.println(e);  
+            } finally {  
+                if (conn != null) {  
+                    try {  
+                        conn.close();  
+                    } catch (SQLException e) {  
+                        e.printStackTrace();  
+                    }  
+                }  
+                if (pst != null) {  
+                    try {  
+                        pst.close();  
+                    } catch (SQLException e) {  
+                        e.printStackTrace();  
+                    }  
+                }  
+                if (rs != null) {  
+                    try {  
+                        rs.close();  
+                    } catch (SQLException e) {  
+                        e.printStackTrace();  
+                    }  
+                }  
+            }  
+            return d;  
+        }  
+        
+        
+        
+        
         
         public static int insertTestcase(String username, String deviceId, String testcase, String status, String errormsg, String date, String time, String path) {          
             //status = "";  

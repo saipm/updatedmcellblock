@@ -73,7 +73,7 @@ li.active a {
     	 var processed_json1 = new Array(); 
     	 var url = window.location.href.split('/');
    	  var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
-   	  
+   	  alert("inside........")
     $.getJSON(baseUrl+'web/devicetests/devicecount/', function(data) {
     	var out=data;
     document.getElementById("devicecount").innerHTML="  "+out;

@@ -1,5 +1,13 @@
 <html>
+<head>
+<script>
+history.pushState({ page: 1 }, "title 1", "#nbb");
+window.onhashchange = function (event) {
+    window.location.hash = "nbb";
 
+};
+</script>
+</head>
 <body>
  <%-- <%
  
@@ -8,7 +16,8 @@
   
  %> --%>
  
-  <h1><a href="dummynew.html"> <img src="img/bootstrap/mobile-integration-workgroup-squarelogo.png"  border="0" alt="MIW" style=" float : right; margin : auto ; height:80px;width:'80px;'"/></a></h1>
+ 
+  <h1><a href="dummynew.jsp"> <img src="img/bootstrap/mobile-integration-workgroup-squarelogo.png"  border="0" alt="MIW" style=" float : right; margin : auto ; height:80px;width:'80px;'"/></a></h1>
   
   
   

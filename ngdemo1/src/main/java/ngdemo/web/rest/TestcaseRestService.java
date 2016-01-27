@@ -16,11 +16,13 @@ import javax.ws.rs.core.MediaType;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.PhantomReference;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -29,19 +31,19 @@ import java.util.Set;
 @Path("/testcases")
 public class TestcaseRestService {
 
-    private final TestcaseService testcaseService;
-  //  private static String APPIUMSERVERSTART="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./appium.js";
-    private static String APPIUMSERVERSTART="/home/miwcb/./appiumstart.sh appium";
-  //  private static String APPIUMSERVERSTARTUID="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./appium.js -U ";
-    private static String APPIUMSERVERSTARTUID="/home/miwcb/./appiumstart.sh appium -U ";
+   private final TestcaseService testcaseService;
+   //private static String APPIUMSERVERSTART="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./appium.js";
+   // private static String APPIUMSERVERSTART="/home/miwcb/./appiumstart.sh appium";
+   // private static String APPIUMSERVERSTARTUID="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./appium.js -U ";
+  private static String APPIUMSERVERSTARTUID="appium -U ";
    
     private static String LOGS="/home/miwcb/junitdir/logs/";
     private static String ADBDEVICES="adb devices";
-    private static String JAVASCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./javatest.sh";
+   // private static String JAVASCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./javatest.sh";
    // private static String MainSCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./mainjava.sh";
      private static String MainSCRIPT="/home/miwcb/junitdir/scripts/./mainjava.sh";
    // private static String JAVAMSCRIPT="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./javaMtest.sh";
-//private static String LOGS="/home/saisreem/logs/";
+  // private static String LOGS="/home/saisreem/logs/";
      
 
     @Inject
@@ -81,7 +83,7 @@ public class TestcaseRestService {
     	//test=SampleJavaTest.javaShellScript(JAVAMSCRIPT);
     	}
     	else{
-        test=SampleJavaTest.javaShellScript(JAVASCRIPT);
+       // test=SampleJavaTest.javaShellScript(JAVASCRIPT);
     	}
     	SampleJavaTest.stopAppiumServer();
     	long stopTime = System.currentTimeMillis();
@@ -112,6 +114,7 @@ public class TestcaseRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public List<Status> getalltexttestcases() throws IOException, InterruptedException{
     	String textPath="/home/miwcb/junitdir/scripts/./textMessages.sh ";
+    	//String textPath="/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./textMessages.sh ";
     	Process textProcess;
     	String message = "text messsaging";
     	String input="4259519067";
@@ -205,8 +208,15 @@ public class TestcaseRestService {
 			}
 			
 		for(String device: deviceList){
+			// SampleJavaTest.javaShellScript("adb -s "+device+" install /home/miwcb/junitdir/junittest/phoneagent.apk");
+		    // Thread.sleep(2000);
+		    // SampleJavaTest.javaShellScript("adb -s "+device+" shell am start -n com.example.setarehn.phage/.MainActivity");
 			Status t = new Status();
 			t=getatestcase(device,testcase);
+		//	Store store = new Store();
+    	//	ServerPhoneAgentRun st = new ServerPhoneAgentRun();
+    		//store.uid = st.runTestCase(testcase,device);
+    	//    SampleJavaTest.javaShellScript("adb -s "+ device+" shell am force-stop com.example.setarehn.phage");
 			statuslist.add(t);
 		}
 		} catch (Exception e) {
@@ -215,11 +225,38 @@ public class TestcaseRestService {
 		return statuslist;
     }
     
+   
+    @GET
+    @Path("/getpartialtestcases/{testcase}/{device}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Status> getpartialtestcases(@PathParam("testcase") String testcase,@PathParam("device") String deviceList) throws IOException, InterruptedException{
+    	System.out.println("inside:::::::::::");
+    	
+    	List<Status> statuslist = new ArrayList<Status>();
+			
+    	System.out.println("device::::::::::::::::::::"+deviceList);
+    	
+    	String[] items = deviceList.split(",");
+        List<String> itemList = Arrays.asList(items);
+        System.out.println(itemList);
+    	
+		for(String device: itemList){
+			System.out.println("device:::::::::"+device);
+			Status t = new Status();
+			t=getatestcase(device,testcase);
+        	statuslist.add(t);
+		}
+		
+		return statuslist;
+    }
+    
+    
     
     @GET
     @Path("/getatestcase/{device}/{testcase}")
     @Produces(MediaType.APPLICATION_JSON)
     public Status getatestcase(@PathParam("device") String device, @PathParam("testcase") String testcase) throws IOException, InterruptedException{
+    	  
     	long startTime = System.currentTimeMillis();
     	Date date1 = new Date();
     	SimpleDateFormat sdf = new SimpleDateFormat("MMddyyyyhmmss");
@@ -231,7 +268,12 @@ public class TestcaseRestService {
     		   firstWord= testcase.substring(0, testcase.indexOf(" ")); 
     		}
     	String path = LOGS+firstWord+formattedDate+".txt";
+    	if(testcase.equals("Text Messaging")){
+    		
+    	}
+    	else{
     	SampleJavaTest.startAppiumServer(APPIUMSERVERSTARTUID+device+"  --log "+path);
+    	}
     	StringBuffer buffer = new StringBuffer("");
     	String test="";
     	String status="";
@@ -241,32 +283,53 @@ public class TestcaseRestService {
     	System.out.println("Device Model: "+SampleJavaTest.getDeviceParameters(device));
     	TestcaseDao td = new TestcaseDao();
     	if(testcase.equals("Trillian Instant Messaging")){
-    		test=SampleJavaTest.javaShellScript(MainSCRIPT+" SendingMessages.java"+" com.test.SendingMessages");
+    		if(SampleJavaTest.getDeviceBrand(device).equals("motorola")){
+    		test=SampleJavaTest.javaShellScript(MainSCRIPT+" SendingMotogMessages.java"+" com.test.SendingMotogMessages");
+    		}else{
+    			test=SampleJavaTest.javaShellScript(MainSCRIPT+" SendingMessages.java"+" com.test.SendingMessages");
+    		}    		
     	}
         if(testcase.equals("Text Messaging")){
-    		test= "/home/miwcb/junitdir/scripts/./textMessages.sh ";
+        	System.out.println("sdkjdssdkkjds"+path);
+        	test=SampleJavaTest.javaShellScript("/home/miwcb/junitdir/scripts/./textmessages.sh "+device+" > "+path);
+        //	test=SampleJavaTest.javaShellScript("/home/saisreem/.npm-packages/lib/node_modules/appium/bin/./textmessages.sh "+device+" > "+path);
+    		//test= "/home/miwcb/junitdir/scripts/./textMessages.sh ";
+        	//test= "/home/miwcb/junitdir/scripts/./textMessages.sh ";
+        	//getalltexttestcases();
     	}
         if(testcase.equals("MMS")){
+        	if(SampleJavaTest.getDeviceBrand(device).equals("motorola")){
+        		test=SampleJavaTest.javaShellScript(MainSCRIPT+" mmstest_motog.java"+" com.test.mmstest_motog");
+        		//*************
+        		
+        	}else{
         	test=SampleJavaTest.javaShellScript(MainSCRIPT+" mmstest_samsungs4.java"+" com.test.mmstest_samsungs4");
-    	}
+        	}}
         if(testcase.equals("Visual voice mail")){
         	test=SampleJavaTest.javaShellScript(MainSCRIPT+" visualvoicemail_samsungs4.java"+" com.test.visualvoicemail_samsungs4");	
     	}
         if(testcase.equals("Youtube with Signin")){
-	
+        	test=SampleJavaTest.javaShellScript(MainSCRIPT+" YoutubeNewVersion.java"+" com.test.YoutubeNewVersion");
         }
         if(testcase.equals("Youtube without Signin")){
-        	test=SampleJavaTest.javaShellScript(MainSCRIPT+" youtube_samsungs4.java"+" com.test.youtube_samsungs4");
-        }
-        if(testcase.equals("Yahoo Mail")){
-        	test=SampleJavaTest.javaShellScript(MainSCRIPT+" _samsungs4.java"+" com.test.youtube_samsungs4");
-        }
-        if(testcase.equals("Yahoo IM")){
-	
+        	if(SampleJavaTest.getDeviceBrand(device).equals("motorola")){
+        		test=SampleJavaTest.javaShellScript(MainSCRIPT+" youtube_motog.java"+" com.test.youtube_motog");
+        	}else{
+        		test=SampleJavaTest.javaShellScript(MainSCRIPT+" youtube_samsungs4.java"+" com.test.youtube_samsungs4");	
+        	}
         }
         if(testcase.equals("Direct TV")){
-	
+        	System.out.println("inside direct tv");
+        	test=SampleJavaTest.javaShellScript(MainSCRIPT+" Directtv.java"+" com.test.Directtv");
+        System.out.println("end directtv");
         }
+        if(testcase.equals("Yahoo Mail")){
+        	test=SampleJavaTest.javaShellScript(MainSCRIPT+" Yahoomailsend_Samsungs4.java"+" com.test.Yahoomailsend_Samsungs4");
+        }
+        if(testcase.equals("Yahoo IM")){
+        	test=SampleJavaTest.javaShellScript(MainSCRIPT+" YahooIM.java"+" com.test.YahooIM");
+        }
+       
     	/*if(device.equals("TA93304LE5")){
     	test=SampleJavaTest.javaShellScript(JAVAMSCRIPT);
     	}
@@ -274,7 +337,11 @@ public class TestcaseRestService {
     		System.out.println("inside::::::::::::::::::::");
         test=SampleJavaTest.javaShellScript(JAVASCRIPT);
     	}*/
+        if(testcase.equals("Text Messaging")){
+        	
+        }else{
     	SampleJavaTest.stopAppiumServer();
+        }
     	long stopTime = System.currentTimeMillis();
 	    long elapsedTime = stopTime - startTime;
 	    String time= String.valueOf(elapsedTime);
@@ -282,6 +349,17 @@ public class TestcaseRestService {
     	buffer.append("device:"+device+"\n");
     	buffer.append("device model:"+SampleJavaTest.getDeviceParameters(device)+"\n");
     			buffer.append(test+"\n");
+    			if(testcase.equals("Text Messaging")){
+    				if(buffer.toString().contains("Starting: Intent")){
+    	    			status="Pass";
+    	    		}if(buffer.toString().contains("Error")){
+    	    			System.out.println("fail:::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+    	    			status="Fail";
+    	    			errormsg=(buffer.toString());	
+    	        		//System.out.println("error message:"+errormsg);
+    	    		}
+    			
+    			}else{
     		if(buffer.indexOf("PASS")>0){
     			status="Pass";
     		}if(buffer.indexOf("FAIL")>0){
@@ -290,6 +368,7 @@ public class TestcaseRestService {
     			errormsg="t"+(buffer.toString().substring(buffer.toString().lastIndexOf("test(")+1));	
         		//System.out.println("error message:"+errormsg);
     		}
+    			}
     		Status st = new Status();
     		st.setDevice(device);
     		st.setStatus(status);

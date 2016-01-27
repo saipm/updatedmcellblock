@@ -1,14 +1,77 @@
-    package ngdemo.web.rest;  
+   package ngdemo.web.rest;  
       
-    import java.io.IOException;  
-    import java.io.PrintWriter;  
-      
-    import javax.servlet.RequestDispatcher;  
-    import javax.servlet.ServletException;  
-    import javax.servlet.http.HttpServlet;  
-    import javax.servlet.http.HttpServletRequest;  
-    import javax.servlet.http.HttpServletResponse;  
-    import javax.servlet.http.HttpSession;  
+    import java.io.IOException; 
+    import java.io.PrintWriter;
+    import java.util.ArrayList;
+    import java.util.List;
+
+    import javax.servlet.RequestDispatcher; 
+    import javax.servlet.ServletException; 
+    import javax.servlet.http.HttpServlet; 
+    import javax.servlet.http.HttpServletRequest; 
+    import javax.servlet.http.HttpServletResponse; 
+    import javax.servlet.http.HttpSession;
+
+    import ngdemo.domain.Device; 
+     
+
+     
+    public class SigninServlet extends HttpServlet{ 
+     
+        private static final long serialVersionUID = 1L; 
+       
+      //  public static boolean flag = false;
+     
+        public void doPost(HttpServletRequest request, HttpServletResponse response)   
+                throws ServletException, IOException {   
+   
+            response.setContentType("text/html");   
+            PrintWriter out = response.getWriter();   
+            String n=request.getParameter("username");   
+            String p=request.getParameter("password"); 
+            HttpSession session = request.getSession(false); 
+            if(session!=null) 
+            session.setAttribute("name", n); 
+       
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+           System.out.println("name" + n + "password" + p + "session" + session);
+            if(SigninDao.validate(n, p) && session != null){    
+                List<Device> devices= new ArrayList<Device>();
+                devices=SigninDao.getDevices();
+                for(Device d : devices){
+                    SigninDao.InsertDeviceData(d);
+                }
+                System.out.println("inside.....................");
+                RequestDispatcher rd=request.getRequestDispatcher("landing.jsp");   
+                rd.forward(request,response);   
+            }   
+            else if (!SigninDao.validate(n, p)){   
+                System.out.println("here:::::::::::::");
+                out.print("<p style=\"color:red\">Sorry username or password error</p>");   
+                RequestDispatcher rd=request.getRequestDispatcher("dummynew.jsp");   
+                rd.include(request,response);   
+            }   
+            else if ( session == null )
+            {
+                RequestDispatcher rd=request.getRequestDispatcher("dummynew.jsp");   
+                rd.include(request,response);  
+            }
+     
+            out.close();   
+        }   
+   
+    }  
+    
+
+/*
+
+
+import ngdemo.domain.Device;  
       
 
       
@@ -27,7 +90,12 @@
             if(session!=null)  
             session.setAttribute("name", n);  
       
-            if(SigninDao.validate(n, p)){    
+            if(SigninDao.validate(n, p)){ 	
+            	List<Device> devices= new ArrayList<Device>();
+            	devices=SigninDao.getDevices();
+            	for(Device d : devices){
+            		SigninDao.InsertDeviceData(d);
+            	}
             	System.out.println("inside.....................");
                 RequestDispatcher rd=request.getRequestDispatcher("landing.jsp");    
                 rd.forward(request,response);    
@@ -41,4 +109,4 @@
       
             out.close();    
         }    
-    }   
+    }   */

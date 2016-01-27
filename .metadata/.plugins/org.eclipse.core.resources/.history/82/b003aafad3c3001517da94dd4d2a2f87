@@ -1,0 +1,62 @@
+package phageserver;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+
+
+public class RunPhoneAgent {
+	
+	
+	
+	 public static void main(String[] args) throws IOException, InterruptedException {
+		
+		
+		
+	    
+
+	        //adb shell am start -n com.example.setarehn.phage/.MainActivity
+	// adb install name.apk
+	//adb shell am force-stop com.example.setarehn.phage
+ 
+	        // run phone agent
+
+	  //     SampleJavaTest.javaShellScript("adb install app-debug(1).apk");
+
+
+	        Thread.sleep(2000);
+
+
+	       SampleJavaTest.javaShellScript("adb shell am start -n com.example.setarehn.phage/.MainActivity");
+
+	        //adb shell dumpsys package com.ceruleanstudios.trillian.android | grep userId=
+		
+		/* String s;
+		
+	      s =  SampleJavaTest.javaShellScript("adb shell dumpsys package com.ceruleanstudios.trillian.android | grep userId=");
+	      
+	      char[] a = s.toCharArray();
+	      String ss = "";
+	      
+	      
+	      for(int i=0 ; i<s.length() ; i++)
+	      {
+	    	  
+	    	  if(a[i] == '=')
+	    	  {
+	    		 for(int j=i ; a[j+1]!=' ' ; j++)
+	    		 {
+	    			 ss = ss + String.valueOf(a[j+1]) ;
+	    		 }
+	    		  break;
+	    	  }
+	    	  
+	      }
+	        
+	        System.out.println(ss);
+		
+		
+	}*/
+
+}
+}

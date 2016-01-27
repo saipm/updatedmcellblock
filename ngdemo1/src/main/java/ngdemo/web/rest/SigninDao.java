@@ -1,40 +1,88 @@
     package ngdemo.web.rest;  
       
-    import java.sql.Connection;  
+    import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.Connection;  
     import java.sql.DriverManager;  
     import java.sql.PreparedStatement;  
     import java.sql.ResultSet;  
-    import java.sql.SQLException;  
+    import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import ngdemo.domain.Device;
+import ngdemo.domain.Status;  
       
     public class SigninDao {  
-     /*  public static boolean validate(String name, String pass) {          
+    	
+    	public static List<Device> getDevices(){
+    	System.out.println("adb devices");
+    	String command = "adb devices";
+		List<Status> dlist = new ArrayList<Status>();
+		List<Device> devs = new ArrayList<Device>();
+		org.codehaus.jettison.json.JSONObject finalObject = new org.codehaus.jettison.json.JSONObject();
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			String line="";
+			List<String> deviceList = new ArrayList<String>();
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((line = input.readLine()) != null) {
+			    if (line.endsWith("device")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    } if (line.endsWith("unauthorized")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    }
+			}
+			for (String device : deviceList) {
+				Device dev = new Device();
+				dev.setDevice(device);
+				dev.setModel(SampleJavaTest.getDeviceParameters(device));
+				dev.setBrand(SampleJavaTest.getDeviceBrand(device));
+				dev.setVersion(SampleJavaTest.getDeviceVersion(device));
+				devs.add(dev);
+			}
+	       
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return devs;
+    
+    }
+    	
+       public static int InsertDeviceData(Device d) {          
             boolean status = false;  
             Connection conn = null;  
             PreparedStatement pst = null;  
             ResultSet rs = null;  
       
             String url = "jdbc:mysql://localhost:3306/";  
-            String dbName = "mcellblocks";  
+            String dbName = "mcellblock";  
             String driver = "com.mysql.jdbc.Driver";  
             String userName = "root";  
             String password = "password";  
+            int i=0;
             try {  
-            	System.out.println("connected");
+            	System.out.println("Inserting");
                 Class.forName(driver).newInstance();  
                 conn = DriverManager  
                         .getConnection(url + dbName, userName, password);  
       
                 pst = conn  
-                        .prepareStatement("select * from login where userid=? and password=?");  
-                pst.setString(1, name);  
-                pst.setString(2, pass);  
+                        .prepareStatement("INSERT INTO MastDeviceData VALUES (? , ? , ? , ? , ? )");  
+                pst.setString(1, d.getDevice());  
+                pst.setString(2, d.getModel());  
+                pst.setString(3, d.getBrand());
+                pst.setString(4, d.getVersion());
+                pst.setString(5, d.getStatus());
       
-                rs = pst.executeQuery();  
-                status = rs.next();  
+                 i = pst.executeUpdate();  
+               // status = rs.next();  
       
             } catch (Exception e) {  
                 System.out.println(e);  
-            } finally {  
+          } finally {  
                 if (conn != null) {  
                     try {  
                         conn.close();  
@@ -57,8 +105,8 @@
                     }  
                 }  
             }  
-            return status;  
-        }  */
+            return i;  
+        }  
     	
     	
     	

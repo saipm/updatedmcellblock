@@ -86,6 +86,13 @@ public class StatusRestService {
     @Produces(MediaType.APPLICATION_JSON)
     public String geterrorTests1(@PathParam("query") String query) throws FileNotFoundException {
     	String test=query.replace("slash", "/");
+    	  int index1 = test.indexOf("Text");
+
+  	    if (index1 != -1){
+  	    	System.out.println("inside::::@@@@@@@@@@@@2");
+  	    	return "Starting: Intent { act=android.intent.action.SENDTO dat=sms:xxxxxxxxxxx (has extras) }\nWarning: Activity not started, its current task has been brought to the front" ;
+  	    }	
+    	
     	StringBuffer buffer = new StringBuffer("output:");
     	try {
     	    BufferedReader in = new BufferedReader(new FileReader(test));
@@ -94,14 +101,9 @@ public class StatusRestService {
     	        //System.out.println(str);
     	   buffer.append(str+"\n");
     	    in.close();
+    	     
     	} catch (IOException e) {
     	}
-        /*System.out.println("sdhdhsdshdshdshdshdshjdshjdsjhdsjhdhdssjh"+test);
-        Scanner s = new Scanner(new File(test));*/
-    	/*TestcaseDao td = new TestcaseDao();
-    	int count=td.getDevicesCount();
-    	return count;*/
-    	//System.out.println("jjjkdjksjkdskjdsjkdjkddsjjdfjfkd"+buffer.toString());
     	return buffer.toString();
     
     }
@@ -168,8 +170,96 @@ public class StatusRestService {
     public List<Integer> getStats() {
     
     	TestcaseDao td = new TestcaseDao();
-    	List<Integer> count=td.getTypeTestcasesCount();
+    	List<Integer> counttrillian=TestcaseDao.getnewTypeTestcasesCount("Trillian Instant Messaging");
+    	List<Integer> counttext=TestcaseDao.getnewTypeTestcasesCount("Text Messaging");
+    	List<Integer> countmms=TestcaseDao.getnewTypeTestcasesCount("MMS");
+    	List<Integer> countvvm=TestcaseDao.getnewTypeTestcasesCount("Visual Voice Mail");
+    	List<Integer> countytsignin=TestcaseDao.getnewTypeTestcasesCount("Youtube with Sign In");
+    	List<Integer> countytwsignin=TestcaseDao.getnewTypeTestcasesCount("Youtube with out Sign In");
+    	List<Integer> countyahoomail=TestcaseDao.getnewTypeTestcasesCount("Yahoo Mail");
+    	List<Integer> countyahooim=TestcaseDao.getnewTypeTestcasesCount("Yahoo IM");
+    	List<Integer> countdirecttv=TestcaseDao.getnewTypeTestcasesCount("DirectTv");
+    	List<Integer> count = new ArrayList<>();
+    	count.addAll(counttrillian);
+    	count.addAll(counttext);
+    	count.addAll(countmms);
+    	count.addAll(countvvm);
+    	count.addAll(countytsignin);
+    	count.addAll(countytwsignin);
+    	count.addAll(countyahoomail);
+    	count.addAll(countyahooim);
+    	count.addAll(countdirecttv);
     	return count;
+    
+    }
+    @GET
+    @Path("/statspassfail/{testcase}/{status}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<App> getalltestpassfail(@PathParam("testcase") String testcase, @PathParam("status") String status) {
+    
+    	TestcaseDao td = new TestcaseDao();
+    	
+    	List<App> count = new ArrayList<App>();
+    	
+    	count=TestcaseDao.getDateResults(testcase, status);
+    	
+    	return count;
+    
+    }
+    
+    @GET
+    @Path("/statscircle/{testcase}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Integer> getalltestscircle(@PathParam("testcase") String testcase) {
+    
+    	TestcaseDao td = new TestcaseDao();
+    	
+    	List<Integer> count = new ArrayList<Integer>();
+    	
+    	count=TestcaseDao.getnewTypeTestcasesCount(testcase);
+    	
+    	System.out.println("got............");
+    	
+    	return count;
+    
+    }
+    
+    @GET
+    @Path("/deviceprop")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Device> addProptoDB() {
+    	System.out.println("adb devices");
+    	String command = "adb devices";
+		List<Status> dlist = new ArrayList<Status>();
+		List<Device> devs = new ArrayList<Device>();
+		org.codehaus.jettison.json.JSONObject finalObject = new org.codehaus.jettison.json.JSONObject();
+		Process p;
+		try {
+			p = Runtime.getRuntime().exec(command);
+			p.waitFor();
+			String line="";
+			List<String> deviceList = new ArrayList<String>();
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((line = input.readLine()) != null) {
+			    if (line.endsWith("device")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    } if (line.endsWith("unauthorized")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    }
+			}
+			for (String device : deviceList) {
+				Device dev = new Device();
+				dev.setDevice(device);
+				dev.setModel(SampleJavaTest.getDeviceParameters(device));
+				dev.setBrand(SampleJavaTest.getDeviceBrand(device));
+				dev.setVersion(SampleJavaTest.getDeviceVersion(device));
+				devs.add(dev);
+			}
+	       
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return devs;
     
     }
     

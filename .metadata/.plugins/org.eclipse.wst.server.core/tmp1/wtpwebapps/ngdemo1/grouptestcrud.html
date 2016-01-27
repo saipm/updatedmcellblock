@@ -241,15 +241,17 @@ a {
         	  $scope.myTestcases1 = {
       			    selected:{}
       			};
+        	  var url = window.location.href.split('/');
+       	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
         	  $scope.init=function(){
         		  $scope.editcheck=false;
-        		  $http.get("http://localhost:8082/ngdemo/web/users/groups").
+        		  $http.get(baseUrl+"web/users/groups").
         			 success(function(data) {
         			   $scope.groups=data;
         			    }).error(function (data, status, headers, config) {
         			        alert("error");
         		});
-        		  $http.get("http://localhost:8082/ngdemo/web/users/testcases").
+        		  $http.get(baseUrl+"web/users/testcases").
      			 success(function(data) {
      			   $scope.tests=data;
      			    }).error(function (data, status, headers, config) {
@@ -267,13 +269,13 @@ a {
       	  $scope.deletelist=[];
         		  if(group){
         			  $scope.displaydata=true;
-        			  $http.get("http://localhost:8082/ngdemo/web/users/testspresent/"+group).
+        			  $http.get(baseUrl+"web/users/testspresent/"+group).
           			 success(function(data) {
           			   $scope.present=data;
           			    }).error(function (data, status, headers, config) {
           			        alert("error");
           		});
-        			  $http.get("http://localhost:8082/ngdemo/web/users/testsnotpresent/"+group).
+        			  $http.get(baseUrl+"web/users/testsnotpresent/"+group).
            			 success(function(data) {
            				 //alert("inside");
            			   $scope.notpresent=data;
@@ -292,7 +294,7 @@ a {
                    }
             	  dataset=$scope.testlist;
             	  
-        		  $http.get("http://localhost:8082/ngdemo/web/users/addtestcase/"+group.id+"/"+dataset).
+        		  $http.get(baseUrl+"web/users/addtestcase/"+group.id+"/"+dataset).
      			 success(function(data) {
      				// alert("success");
      				 $scope.change(group.id);
@@ -308,7 +310,7 @@ a {
                }
         	  dataset=$scope.deletelist;
         	  
-    		  $http.get("http://localhost:8082/ngdemo/web/users/deletetestcase/"+group.id+"/"+dataset).
+    		  $http.get(baseUrl+"web/users/deletetestcase/"+group.id+"/"+dataset).
  			 success(function(data) {
  				 $scope.change(group.id);
  			    }).error(function (data, status, headers, config) {
@@ -318,7 +320,7 @@ a {
           
           $scope.getvalues = function(group) {
           	  //data=$scope.testlist;
-    		  $http.get("http://localhost:8082/ngdemo/web/users/edittest/"+group.id).
+    		  $http.get(baseUrl+"web/users/edittest/"+group.id).
  			 success(function(data) {
  				//alert(data);
  				//$scope.myTestcases.selected=data;

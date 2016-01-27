@@ -1,0 +1,203 @@
+
+<html>
+<head>
+ <style>
+ li {
+    display: inline;
+}
+    .moreinfo {
+    	  display: inline-block;
+    	} 
+    	TD{font-family: Arial;
+    	 font-size: 11pt;}
+    </style>
+    <!-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    
+    
+    <script type="text/javascript">
+    var deviceId;
+    var processed_json = new Array(); 
+    var processed_json1 = new Array();  
+    $( document ).ready(function() {
+    	var processed_json = new Array();
+   	 var processed_json1 = new Array(); 
+   	 var url = window.location.href.split('/');
+  	  var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+  
+   $.getJSON(baseUrl+'web/devicetests/stats/', function(data) {
+   	
+   	var tripass=data[3];
+   	var textpass=data[0]-data[2];
+   	
+       var name = ['Pass','Fail'];
+ 
+       var data1 = [tripass,data[3]];
+       var final1 = [];
+       
+       //var name1 = ['Pass','Fail'];
+       var data2 = [textpass,data[2]];
+       var final2 = [];
+       
+       for(var i=0; i < name.length; i++) {
+       	final1.push({
+               name: name[i],
+               y: data1[i]			 
+           }); 	   
+       }    
+       for(var i=0; i < name.length; i++) {
+       	final2.push({
+               name: name[i],
+               y: data2[i]			 
+           }); 	   
+       }    
+       Highcharts.setOptions({ 
+		      colors: ['#60BD68','#F17CB0', '#B2912F', '#B276B2','#DECF3F', '#F15854']  
+		   });
+       
+       Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+           return {
+               radialGradient: {
+                   cx: 0.5,
+                   cy: 0.3,
+                   r: 0.7
+               },
+               stops: [
+                   [0, color],
+                   [1, Highcharts.Color(color).brighten(-0.5).get('rgb')] // darken
+               ]
+           };
+       });
+       
+   	
+       $('#container1').highcharts({
+           chart: {
+               plotBackgroundColor: null,
+               plotBorderWidth: null,
+               plotShadow: false,
+               type: 'pie'
+           },
+           title: {
+               text: 'Trillian IM'
+           },
+           tooltip: {
+               pointFormat: '{series.name}: <b>{point.y}</b>'
+           },
+           plotOptions: {
+               pie: {
+                   allowPointSelect: true,
+                   cursor: 'pointer',
+                   point: {
+                       events: {
+                           click: function () {
+                               location.href = this.options.url;
+                           }
+                       }
+                   },
+                   dataLabels: {
+                       enabled: true,
+                         style: {
+                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                         },
+                   },
+               }
+           
+           },
+           series: [{
+           	 data: [{
+           		 name:"Pass",
+                    y: tripass,
+                    url: baseUrl+'table-data.jsp?query=trillianpass'
+                }, {
+               	 name:"Fail",
+                    y: data[0],
+                    url: baseUrl+'table-data.jsp?query=trillianfail',
+                    color:'#ff0000'		 
+                }]
+           }]
+       });
+ 	
+       $('#container2').highcharts({
+           chart: {
+               plotBackgroundColor: null,
+               plotBorderWidth: null,
+               plotShadow: false,
+               type: 'pie'
+           },
+           title: {
+               text: 'Texting'
+           },
+           tooltip: {
+               pointFormat: '{series.name}: <b>{point.y}</b>'
+           },
+           plotOptions: {
+               pie: {
+                   allowPointSelect: true,
+                   cursor: 'pointer',
+                   point: {
+                       events: {
+                           click: function () {
+                               location.href = this.options.url;
+                           }
+                       }
+                   },
+                   dataLabels: {
+                       enabled: true,
+                       style: {
+                           color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                       }
+                   }
+               }
+           
+           },
+           series: [{
+          	 data: [{
+          		 name:"Pass",
+                   y: textpass,
+                   url:baseUrl+'table-data.jsp?query=textpass'
+               }, {
+              	 name:"Fail",
+                   y: data[2],
+                   url: baseUrl+'table-data.jsp?query=textfail',
+                   color:'#ff0000'
+               }]
+          }]
+       });
+ 	 
+
+   });
+   
+   });
+ 
+    </script>
+</head>
+<body>
+   <header>
+          <nav>
+            <ul class="commonNav" id="main-nav">
+            
+            <li><a href="#" id="testing1">Memory</a></li>
+            
+             <!--  <li><a href="#/device-list">Editor</a></li> -->
+              <li><a href="#" id="testing" >Storage</a></li>
+              
+                <!-- <li class="selected"><a href="/user/dashboard/"><font color="#3399ff"><bold>CPU</bold></font></a></li> -->
+                <!-- <li><a href="index.html">Devices</a></li> -->
+                
+                
+              
+            </ul> <!-- /commonNav -->
+            </nav>
+            <span id="shadow"></span>
+          </header>
+  
+   <div class="moreinfo" id="container2" style="margin-left:200px;height:500px;width:250px;"></div>  
+  <div class="moreinfo" id="container1" style="margin-left:250px;height:600px;width:500px;"></div>
+  
+<div class="moreinfo" id="test">
+</div>
+
+     <!-- <iframe src="http://techcrunch.com"></iframe> -->
+</body>
+</html>

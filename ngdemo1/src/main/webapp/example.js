@@ -175,14 +175,27 @@ app.controller('DemoController', function ($scope, $http, $q) {
 });
 
 
-app.controller('TestcaseListCtrl', ['$scope','$http','$timeout', 
-                                    function ($scope,$http,$timeout) {
+app.controller('TestcaseListCtrl', ['$scope','$http','$location','$timeout', 
+                                    function ($scope,$http,$location,$timeout) {
 	var url = window.location.href.split('/');
 	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+	   $scope.testcaseset='';
+	   $scope.showcheck=false;
+	   $scope.myTestcases = {
+	 		    selected:{}
+	 		};
+		 $scope.myTestcases1 = {
+		 		    selected:{}
+		 		};
 	$scope.init=function(userid){
 		
 		$scope.userid=userid;
-		//alert("sdgdsggsdgdsgds"+userid);
+		var url1 = window.location.href.split('=');
+		//alert(url1[1]);
+		testcaseid=url1[1];
+		//testcaseid=testcaseid.replaceall('%20',' ');
+		testcaseid = testcaseid.replace(/%20/g, ' ');
+		$scope.testcaseset=testcaseid;
 		$scope.thing='default';
 		    $http.get(baseUrl+"web/devices").
 			 success(function(data) {
@@ -221,9 +234,22 @@ app.controller('TestcaseListCtrl', ['$scope','$http','$timeout',
                 	    		mywindow=window.open(baseUrl+'web/devicetests/querydata1/'+name,"mywindow","menubar=1,resizable=1,width=800,height=700");
                 	    	};
 
-                            	 
+                	    	$scope.testlist=[];
+                			 $scope.submitform = function(list,devices) {
+                				// alert("askskjdjksjkdsjksdjkdssjkd");
+                				 devices1=devices;
+                	       	  for (i = 0; i < devices.length; i++) {
+                	       		  if(list[i]){
+                	       			  if(list[i]==devices[i].device){
+                	       				  $scope.testlist.push(devices[i]);
+                	       			  }
+                	       		  }
+                	       		 }
+                	       	//  alert($scope.testlist);
+                	       	  
+                			 };
                             	 $scope.test=function(name){
-                            		 alert("name:::"+name);
+                            		// alert("name:::"+name);
                             		 $scope.loader1.loading = true ;
                             	    $http.get(baseUrl+"web/testcases/getalltestcases/"+name).
                           			 success(function(data) {
@@ -240,6 +266,29 @@ app.controller('TestcaseListCtrl', ['$scope','$http','$timeout',
                           			    	},1000);
                           			  });
                             	 };
+                            	 
+                            	 $scope.testsub=function(name,testlist){
+                            		 devicelist=[];
+                            		// alert("name:::"+name);
+                            		 $scope.loader1.loading = true ;
+                            		// alert(testlist.length);
+                            		 for(i=0;i<testlist.length;i++){
+                            			 devicelist.push(testlist[i].device);
+                            		 }
+                            		  $http.get(baseUrl+"web/testcases/getpartialtestcases/"+name+"/"+devicelist).
+                            		  success(function(data) {
+                            			   $scope.testlist=data;
+                            			   //alert("status:"+data.status);
+                            			    $scope.status1.loading = true ;
+                            			    $scope.loader1.loading = false ;
+                            			  
+                            			    }).error(function (data, status, headers, config) {
+                            			    	//console.log("sjsjsd"+data);
+                            			       // alert("error");
+                            			    	
+                            			  });
+                            	 
+                            	 };
                             	$scope.texttest=function(){
                            		 $scope.loader1.loading = true ;
                            	    $http.get(baseUrl+"web/testcases/getalltexttestcases").
@@ -255,7 +304,7 @@ app.controller('TestcaseListCtrl', ['$scope','$http','$timeout',
                           		});
                            	 };
                             	$scope.runatestcase=function(device){
-                            			 alert(device.device);
+                            	//		 alert(device.device);
                             		     $http.get(baseUrl+"web/testcases/getatestcase/"+device.device).
                             			 success(function(data) {
                             			     console.log(data);
@@ -282,7 +331,9 @@ app.controller('DevicesCtrl', ['$scope','$http', '$window', function($scope,$htt
 	  $scope.searchTestcase   = ''; 
 	  $scope.searchTestcaseResult   = '';
 	  $scope.userid='';
-	 
+	  $scope.reloadPage = function(){
+		  $scope.thing='reports';
+		  window.location.reload();}
 	 $scope.myInterval = 3000;
 	  $scope.slides = [
 	   {
@@ -302,6 +353,13 @@ app.controller('DevicesCtrl', ['$scope','$http', '$window', function($scope,$htt
 	$scope.devicename='';
 	$scope.testcaseset ='';
 	$scope.usertype='';
+	$scope.showcheck=false;
+	 $scope.myTestcases = {
+ 		    selected:{}
+ 		};
+	 $scope.myTestcases1 = {
+	 		    selected:{}
+	 		};
 $scope.init=function(userid){
 	$scope.userid=userid;
 	//alert("sdgdsggsdgdsgds"+userid);
@@ -369,7 +427,7 @@ $scope.init=function(userid){
      	
 		 //alert("dsjjdjdff");
 		
-	    $http.get("http://localhost:8082/ngdemo/web/testcases/getalltexttestcases").
+	    $http.get(baseUrl+"web/testcases/getalltexttestcases").
 			 success(function(data) {
 				 $scope.testcaseresults=data;
 				 alert(data);
@@ -378,12 +436,32 @@ $scope.init=function(userid){
 			        alert("ddshdhshhferror");
 		});
 		};
-	 
-
+	$scope.testlist=[];
+		 $scope.submitform = function(list,devices) {
+			// alert("askskjdjksjkdsjksdjkdssjkd");
+			 devices1=devices;
+       	  for (i = 0; i < devices.length; i++) {
+       		  if(list[i]){
+       			  if(list[i]==devices[i].device){
+       				  $scope.testlist.push(devices[i]);
+       			  }
+       		  }
+       		 }
+       	  
+       	  
+		 };
 	 $scope.showdetails= function(username)
 	   {
 		   $scope.username=username;
 	      window.open('partials/device-info.html?username='+$scope.username,'_blank');
+	   }
+	 $scope.showcharts= function(testcase)
+	   {
+	      window.open('AllCharts.jsp?username='+testcase,'_blank');
+	   }
+	 $scope.showtestcase= function(testcase)
+	   {
+	      window.open('testcasemap.jsp?username='+testcase,'_blank');
 	   }
 	 $scope.showdevicedetails= function(username)
 	   {
@@ -472,9 +550,9 @@ $scope.init=function(userid){
 	    }
 	    
 	    $scope.filterDevices = function(device) {
-	        var modelIsNew = indexedDevices.indexOf(device.model) == -1;
+	        var modelIsNew = indexedDevices.indexOf(device.brand) == -1;
 	        if (modelIsNew) {
-	        	indexedDevices.push(device.model);
+	        	indexedDevices.push(device.brand);
 	        }
 	        return modelIsNew;
 	    };

@@ -1,4 +1,4 @@
-/*package ngdemo.web.rest;
+package ngdemo.web.rest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,38 +8,59 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 
-*//**
+/**
  * Created by SetarehN on 1/6/2016.
- *//*
+ */
 
 @Path("/testcasesnew")
 public class WebServices {
 
-
+   String Uid;
     ServerPhoneAgentRun serverPhoneAgentRun;
 
     @Path("/start")
     @GET
 
+    
     public String startTestCase(@QueryParam("flag") String flag) throws Exception {
 
         System.out.print(flag+"flag");
         //flag = "START";
-       String nameOfTestCase = "SMS";
+       
         if (flag.equals("STARTTT")) {
             // start test case
-        	serverPhoneAgentRun = new ServerPhoneAgentRun();
+        //	serverPhoneAgentRun = new ServerPhoneAgentRun();
         	System.out.println("11111111111");
-          serverPhoneAgentRun.runTestCase();
-          System.out.println("30000"+"************************");
+        // String Uid = serverPhoneAgentRun.runTestCase();
+        	
+        	
+        	while(true)
+        	{
+        		
+        		Store store = new Store();
+        		if(!store.uid.equals(""))
+        		{
+        			System.out.println("loop done");
+        			this.Uid = store.uid;
+        			store.uid = "";
+        			break;
+        		}
+        		
+        		
+        	}
+        	
+        	
+        	
+        	
+       //   System.out.println("30000"+"************************");
       //    Thread.sleep(30000);
             // end of test case
        //    Thread.sleep(4000);
-            System.out.print("111111");
+            System.out.print("after loop");
             JSONObject object;
             JSONArray array = new JSONArray();
             object = new JSONObject();
-            object.put("response", nameOfTestCase);
+           object.put("response", this.Uid);
             array.add(object);
             return array.toJSONString();
         }
@@ -70,7 +91,17 @@ public class WebServices {
         // set result in database
           serverPhoneAgentRun =new ServerPhoneAgentRun();
           serverPhoneAgentRun.setResultInDataBase(packetsRX,packetsTX,packetsRXBytes,packetsTXBytes,latency);
+
           serverPhoneAgentRun.stopPhoneAgent();
+          /*  JSONObject object;
+            JSONArray array = new JSONArray();
+            object = new JSONObject();
+            object.put("response", "True");
+            array.add(object);
+            return array.toJSONString();*/
+
+
+      //  return null;
     }
 
 
@@ -81,6 +112,8 @@ public class WebServices {
 
     public String postTest(JSONObject jsonObject) throws Exception {
 
+
+
             System.out.print("haaaaaaaaaaaaa");
             JSONObject object;
             JSONArray array = new JSONArray();
@@ -88,5 +121,20 @@ public class WebServices {
             object.put("response", jsonObject.get("havij").toString());
             array.add(object);
             return array.toJSONString();
+
     }
-}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

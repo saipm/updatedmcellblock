@@ -1,0 +1,335 @@
+<html>
+  <head>  
+  <style>
+  a:link { color: #000000; text-decoration: none}
+a:visited { color: #000000; text-decoration: none}
+a:hover { color: #3366CC; text-decoration: underline}
+a:active { color: #000000; text-decoration: none}
+.left-div {
+    float: left;
+    width: 500px;
+    margin-right: 8px;
+}
+.right-div {
+    margin-left:1150px;
+}
+  .alert-change {
+  color: #31708f;
+  background-color: #4d93ff;
+  border-color: #bce8f1;
+}
+#rcorners1 {
+    border-radius: 25px;
+    background: #66a2ff;
+    padding: 20px; 
+    width: 850px;
+    height: 100px;    
+}
+
+  body{
+  font-family:calibri;
+  }
+  button {
+    background:none!important;
+     border:none; 
+     padding:0!important;
+    
+    /*optional*/
+    font-family:calibri; /*input has OS specific font-family*/
+     color:#069;
+     text-decoration:underline;
+     cursor:pointer;
+}
+.users {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+/* Column widths are based on these cells */
+.row-ID {
+  width: 10%;
+}
+.row-name {
+  width: 40%;
+}
+.row-job {
+  width: 30%;
+}
+.row-email {
+  width: 20%;
+}
+.users td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.users thead {
+  background: #4d93ff;
+  color: white;
+}
+.users td,.users thead {
+  text-align: left;
+  padding: 5px 10px;
+}
+.users tr:nth-child(even) {
+  background: #b3d1ff;
+}
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+  </style>
+    <title>Master Test Groups</title>  
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+     <!-- <link rel="stylesheet" href="app.css"> -->
+  </head>
+  <body ng-app="myApp">
+      <div style="border: 25px solid white;" class="generic-container" ng-controller="AppController as ctrl" ng-init="init()">
+          <div class="panel panel-default">
+              <div class="panel-heading">
+              <div class="left-div">
+              <span class="lead"><b>MCellBlock</b></span>
+              </br><i><b>Testcase mapping by User Group</b></i>
+              </div>
+              <div class="right-div">
+                <img src="img/bootstrap/mobile-integration-workgroup-squarelogo.png" border="0" alt="MIW" style="margin-bottom:'0px';height:60px;width:'80px;'"/>
+              </div>
+              </div>
+             </br> 
+              </br>
+             </br>
+              
+             
+              <div style="margin-left:150px;margin-right:20px;">
+              <div style="margin-left:50px;" class="formcontainer">
+                  <form style="font-family:calibri;font-size:12px;" ng-submit="ctrl.submit()" name="myForm" class="form-horizontal" id="rcorners1">
+                      <!-- <input type="text" ng-model="ctrl.user.deptId" /> -->
+                      
+                  
+                      <div class="row">
+                          <div class="form-group col-md-12">
+                              <label class="col-md-2 control-lable" for="uname">User Group</label>
+                              <div class="col-md-7">
+                                 <select name="group" data-ng-options="s.name for s in groups" data-ng-model="group"  ng-change="change(group.id)" required>
+                                 
+                                 </select>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+                
+                  </br>
+                  </br>
+                  <div ng-show="displaydata">
+                  <form align="center">
+   
+ </br></br>
+ <label style="margin-left:-85px;font-size:13px;font-family:calibri;" class="col-md-2 control-lable" for="uname">Existing Testcases:</label>
+   <table style="margin-left:-70px;font-family:calibri;font-size:15px;" class="users" >
+    
+    <thead>
+        <th class="row-2 row-id">
+          <a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
+            Select Test
+            <span ng-show="sortType == 'id' && !sortReverse"><i class="fa fa-caret-down"></i>
+            </span>
+            <span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th class="row-3 row-job">
+          <a href="#" ng-click="sortType = 'testcase'; sortReverse = !sortReverse">
+           &nbsp;&nbsp;Test Case Description
+            <span ng-show="sortType == 'testcase' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'testcase' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+     <!--  </tr> -->
+    </thead>
+    
+    <tbody>
+      <tr ng-repeat="us in present | orderBy:sortType:sortReverse | filter:searchDevice">
+      <!-- <td>{{$index+1}}</td> -->
+       <td><input type="checkbox" ng-model="myTestcases1.selected[us.id]" ng-true-value="'{{us.testcase}}'" ng-false-value="''">
+       </td>
+        <td>{{ us.testcase }}</td>
+      </tr>
+    </tbody>
+    <!-- {{myTestcases1.selected}} -->
+  </table>
+ <!--  {{myTestcases.selected}} -->
+ </br>
+   <div style="margin-left:900px" >
+            <div class="row" style="font-family:calibri;">
+                      <!--  <button type="button" ng-disabled="myForm.$invalid" ng-click="submitform(id,name,editcheck)"><b>Submit</b></button> -->
+                       &nbsp;&nbsp;  <button type="button"  ng-click="deletedata(group,myTestcases1.selected)"><b>Delete</b></button>
+                       <!-- &nbsp;&nbsp;   <button type="button" ng-click="cancel()"><b>Cancel</b></button> -->
+                       </div>
+                       </div>
+ <!--  </form>
+   <form align="center"> -->
+   
+ </br></br>
+ <label style="margin-left:-85px;font-size:13px;font-family:calibri;" class="col-md-2 control-lable" for="uname">New Testcases:</label>
+   <table style="margin-left:-70px;font-family:calibri;font-size:15px;" class="users" >
+    
+    <thead>
+        <th class="row-2 row-id">
+          <a href="#" ng-click="sortType = 'id'; sortReverse = !sortReverse">
+            Select Test
+            <span ng-show="sortType == 'id' && !sortReverse"><i class="fa fa-caret-down"></i>
+            </span>
+            <span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th class="row-3 row-job">
+          <a href="#" ng-click="sortType = 'testcase'; sortReverse = !sortReverse">
+           &nbsp;&nbsp;Test Case Description
+            <span ng-show="sortType == 'testcase' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'testcase' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+     <!--  </tr> -->
+    </thead>
+    
+    <tbody>
+      <tr ng-repeat="u in notpresent | orderBy:sortType:sortReverse | filter:searchDevice">
+      <!-- <td>{{$index+1}}</td> -->
+       <td><input type="checkbox" ng-model="myTestcases.selected[u.id]" ng-true-value="'{{u.testcase}}'" ng-false-value="''">
+       </td>
+        <td>{{ u.testcase }}</td>
+      </tr>
+    </tbody>
+   <!-- {{myTestcases.selected}} -->
+  </table>
+   <div style="margin-left:900px" >
+            <div class="row" style="font-family:calibri;">
+                       <button type="button" ng-click="submitform(group,myTestcases.selected)"><b>Submit</b></button>
+                      <!--  &nbsp;&nbsp;  <button type="button" ng-disabled="myForm.$invalid" ng-click="deletedata(id)"><b>Delete</b></button>
+                       &nbsp;&nbsp;   <button type="button" ng-click="cancel()"><b>Cancel</b></button>
+                       --> </div>
+                       </div>
+  </form> 
+  </div>
+              </div>
+              </div>
+              </br>
+             
+             
+                       </br>
+                       </br>
+          </div>
+         
+      </div>
+       
+       
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.js">
+      </script>  
+    <!--   <script>
+          angular.module('myApp', [])
+          .controller('AppController', ['$scope','$http', function($scope,$http) {
+        	  
+        	  $scope.groups='';
+        	  $scope.tests='';
+        	  $scope.present='';
+        	  $scope.notpresent='';
+        	  $scope.displaydata=false;
+        	  $scope.testlist=[];
+        	  $scope.deletelist=[];
+        	  $scope.myTestcases = {
+        			    selected:{}
+        			};
+        	  $scope.myTestcases1 = {
+      			    selected:{}
+      			};
+        	  var url = window.location.href.split('/');
+       	   var baseUrl = url[0] + '//' + url[2]+"/"+url[3]+"/";
+        	  $scope.init=function(){
+        		  $scope.editcheck=false;
+        		  $http.get(baseUrl+"web/users/groups").
+        			 success(function(data) {
+        			   $scope.groups=data;
+        			    }).error(function (data, status, headers, config) {
+        			        alert("error");
+        		});
+        		  $http.get(baseUrl+"web/users/testcases").
+     			 success(function(data) {
+     			   $scope.tests=data;
+     			    }).error(function (data, status, headers, config) {
+     			        alert("error");
+     		});
+        	  };
+        	  $scope.change=function(group){
+        		  $scope.myTestcases = {
+          			    selected:{}
+          			};
+          	  $scope.myTestcases1 = {
+        			    selected:{}
+        			};
+          	$scope.testlist=[];
+      	  $scope.deletelist=[];
+        		  if(group){
+        			  $scope.displaydata=true;
+        			  $http.get(baseUrl+"web/users/testspresent/"+group).
+          			 success(function(data) {
+          			   $scope.present=data;
+          			    }).error(function (data, status, headers, config) {
+          			        alert("error");
+          		});
+        			  $http.get(baseUrl+"web/users/testsnotpresent/"+group).
+           			 success(function(data) {
+           				 //alert("inside");
+           			   $scope.notpresent=data;
+           			    }).error(function (data, status, headers, config) {
+           			        alert("error");
+           		});
+        			  
+        		  }
+        	  };
+        	  $scope.submitform = function(group,list) {
+            	  for (i = 0; i < $scope.tests.length; i++) {
+            		//  alert(list[i+1]);
+            		  if(list[i+1]){
+            			  $scope.testlist.push(i+1);
+            			  }
+                   }
+            	  dataset=$scope.testlist;
+            	  
+        		  $http.get(baseUrl+"web/users/addtestcase/"+group.id+"/"+dataset).
+     			 success(function(data) {
+     				// alert("success");
+     				 $scope.change(group.id);
+     			    }).error(function (data, status, headers, config) {
+     			       alert("error");
+     		}); 
+          };
+          $scope.deletedata = function(group,list) {
+        	  for (i = 0; i < $scope.tests.length; i++) {
+        		  if(list[i+1]){
+        			  $scope.deletelist.push(i+1);
+        			  }
+               }
+        	  dataset=$scope.deletelist;
+        	  
+    		  $http.get(baseUrl+"web/users/deletetestcase/"+group.id+"/"+dataset).
+ 			 success(function(data) {
+ 				 $scope.change(group.id);
+ 			    }).error(function (data, status, headers, config) {
+ 			       alert("error");
+ 		}); 
+      };
+          
+          $scope.getvalues = function(group) {
+          	  //data=$scope.testlist;
+    		  $http.get(baseUrl+"web/users/edittest/"+group.id).
+ 			 success(function(data) {
+ 				//alert(data);
+ 				//$scope.myTestcases.selected=data;
+ 			    }).error(function (data, status, headers, config) {
+ 			       alert("error");
+ 		}); 
+      };
+ 
+      }]);
+  </script> -->
+  </body>
+</html>

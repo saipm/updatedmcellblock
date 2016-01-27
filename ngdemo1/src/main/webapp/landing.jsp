@@ -215,8 +215,8 @@ html, body{
 			    <ul class="dropdown-menu">
 			    <li style="cursor:pointer;margin-left:5px;">
 			    <a href="" ng-click="setActive('reports')">All Reports</a></li>
-			    <li style="cursor:pointer;margin-left:5px;">
-			    <a href="" ng-click="setActive('reportsdate')">Reports by date</a></li>
+			   <!--  <li style="cursor:pointer;margin-left:5px;">
+			    <a href="" ng-click="setActive('reportsdate')">Reports by date</a></li> -->
 			   <!--  <li class="divider"></li>
 			     <li class="dropdown-submenu" style="cursor:pointer;" ng-repeat="devicePerModel in devicesToFilter() | filter:filterDevices">
 			        <a href="" href="" ng-click="setActive(devicePerModel.brand)" ng-model="devicemodel"> {{devicePerModel.brand}} </a>	
@@ -233,12 +233,12 @@ html, body{
 			    <a href="" ng-click="setActive('devicegroups')">All devices</a></li>
 			    <li style="cursor:pointer;margin-left:5px;">
 			    <a href="" ng-click="setActive('deviceprops')">Device Properties</a></li>
-			    <li class="divider"></li>
+			   <!--  <li class="divider"></li>
 			     <li class="dropdown-submenu" style="cursor:pointer;" ng-repeat="devicePerModel in devicesToFilter() | filter:filterDevices">
 			        <a href="" href="" ng-click="setActive(devicePerModel.brand)" ng-model="devicemodel"> {{devicePerModel.brand}} </a>	
 			        <ul class="dropdown-menu">
-			        	<li ng-repeat="device in devices | filter:{brand: devicePerModel.brand}"><a href="#">{{device.device}}</a></li>
-			    </ul>
+			        	<li ng-repeat="device in devices | filter:{brand: devicePerModel.brand}"><a href="#" ng-click="showdetails(device.device)">{{device.device}}</a></li>
+			    </ul> -->
 			    </ul>
                </li>
               <!--  <li class="divider"></li>
@@ -250,9 +250,10 @@ html, body{
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-controller="DevicesCtrl"  data-ng-init="init('<%=session.getAttribute("name")%>')"><span class="cwhite">Testcases <b class="caret"></b></span></a>
              <ul class="dropdown-menu">
+              <!-- <li>  <a href="" ng-click="setActive('testcasemapping')">Testcase Mapping</a></li>  -->
              <li>  <a href="" ng-click="setActive('newtestcase')">All Testcases</a></li>
-            <li class="divider"></li>
-      <li class="dropdown-submenu" style="margin-left:10px;margin-bottom:5px;cursor:pointer;" ng-repeat="testcase in testcases"><a href="#" ng-click="setActive('testcase');setTestcase(testcase.testcase)">{{testcase.testcase}}</a></li>
+            <!-- li class="divider"></li> -->
+    <!--   <li class="dropdown-submenu" style="margin-left:10px;margin-bottom:5px;cursor:pointer;" ng-repeat="testcase in testcases"><a href="#" ng-click="setActive('testcase');setTestcase(testcase.testcase)">{{testcase.testcase}}</a></li> -->
       <li class="divider"></li>
       </ul>
           </li>
@@ -261,13 +262,13 @@ html, body{
               <ul class="nav navbar-nav"> -->
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" ng-controller="DevicesCtrl"  data-ng-init="init('<%=session.getAttribute("name")%>')"><span class="cwhite">Groups <b class="caret"></b></span></a>
-             <ul class="dropdown-menu">
+          <!--    <ul class="dropdown-menu">
             <li>  <a href="" ng-click="setActive('jdjdjdf')">Create a New Group</a></li>
             <li class="divider"></li>
             <li>  <a href="" ng-click="setActive('ksdkjdsdskj')"> Groups</a></li>
-     <!--  <li class="dropdown-submenu" style="margin-left:20px;margin-bottom:5px;cursor:pointer;" ng-repeat="testcase in testcases">{{testcase.testcase}} -->
-      <!-- <li class="divider"></li> -->
-      </ul>
+      <li class="dropdown-submenu" style="margin-left:20px;margin-bottom:5px;cursor:pointer;" ng-repeat="testcase in testcases">{{testcase.testcase}}
+      <li class="divider"></li>
+      </ul> -->
           </li>
           
       <!--   </ul> -->
@@ -396,7 +397,7 @@ html, body{
     <tbody>
       <tr ng-repeat="roll in devices | orderBy:sortType:sortReverse | filter:searchDevice">
       <td>{{$index+1}}</td>
-        <td>{{ roll.device }}</td>
+        <td><a href="" ng-click="showdetails(roll.device)">{{ roll.device }}</a></td>
         <td>{{ roll.model }}</td>
         <td>{{ roll.brand }}</td>
         <td>{{ roll.version }}</td>
@@ -421,6 +422,7 @@ html, body{
         <input type="text" class="form-control" placeholder="Search Results" ng-model="searchTestcaseResult">
       </div>      
     </div>
+    
     <div class="form-group">
       <div class="input-group">
         <!-- <div class="input-group-addon">Search<i class="fa fa-search"></i></div> -->
@@ -497,7 +499,7 @@ html, body{
       <tr ng-repeat="roll in testcaselists | orderBy:sortType:sortReverse | filter:searchTestcaseResult | filter:searchtestcase | filter:searchstatus">
       <td>{{$index+1}}</td>
         <td>{{ roll.device }}</td>
-        <td>{{ roll.testcase }}</td>
+        <td><a href="#" ng-click="showcharts(roll.testcase)">{{ roll.testcase }}</a></td>
         <td>{{ roll.status }}</td>
         <td>{{ roll.date }}</td>
         <td>{{ roll.time }} ms</td>
@@ -706,12 +708,12 @@ html, body{
         <button ng-show="loader1.loading" class="btn btn-success">Loading...
         <i class="fa fa-spinner fa-spin"></i>
         </button>
-          <div ng-show="device.status=='Pass'">
+          <div ng-show="device.status=='Pass'  || device.status == '' ">
           <div class="div-table-row">
      <div ng-show="status1.loading" class="success">Pass</div>
      </div>
 </div>
-   <div ng-show="device.status=='Fail'">
+   <div ng-show="device.status=='Fail' || device.status=='FAIL' ">
    <div class="div-table-row">
      <div ng-show="status1.loading" class="error" >{{device.errormsg}}</div>
      </div>
@@ -739,7 +741,10 @@ html, body{
     
   <!--     END    -->  
     
-    
+  <div ng-show="isActive('testcasemapping')">
+  <!-- <div ng-include="partials/testcase-list.html"> -->
+   <div data-ng-include data-src="'TestcaseMapping.html'"></div>
+    </div>  
     
     <div ng-show="isActive('newtestcase')">
        <!-- <div  ng-show="isActive('deviceprops')"> -->
@@ -784,7 +789,7 @@ html, body{
        <!--  <td>{{ roll.device }}</td>
         <td>{{ roll.model }}</td> -->
         <!-- <td>{{ roll.id }}</td> -->
-        <td><a href="#" ng-click="setActive('testcase');setTestcase(roll.testcase);">{{ roll.testcase }}</a></td>
+        <td><a href="#" ng-click="showtestcase(roll.testcase)">{{ roll.testcase }}</a></td>
       </tr>
     </tbody>
     
@@ -867,57 +872,12 @@ html, body{
 <span style="margin-left:120px;"><a href="" ng-click="setActive('devicegroups')"><i class="fa  fa-android circle" style="font-size:110px;"></i></a> </span>
 <span style="margin-left:120px;">
 <a href="" ng-click="setActive('newtestcase')"><i class="fa  fa fa-file-o circle" style="font-size:110px;"></i></a></span>
-<span style="margin-left:120px;"><i class="fa  fa-search circle" style="font-size:110px;"></i></span>
-<span style="margin-left:120px;"><i class="fa fa-pie-chart circle" style="font-size:110px;"></i></span>
+<span style="margin-left:120px;"><a href="" ng-click="setActive('deviceprops')"><i class="fa  fa-search circle" style="font-size:110px;"></i></a></span>
+<span style="margin-left:120px;"><a href="" ng-click="setActive('reports')"><i class="fa fa-pie-chart circle" style="font-size:110px;"></i></a></span>
 </div>
-   <!--  <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:50px;width:150px;height:100px;">
-        <a href="#" class="orange-btn ownThumbnail thumbnailContent">
-            <p>Devices</p>
-        </a>
-    </div>
-    
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:20px;width:150px;height:100px;">
-        <a href="#" class="light-orange-btn ownThumbnail thumbnailContent">
-            <p>Test Cases</p>
-        </a>
-    </div>
-    
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:20px;width:150px;height:100px;">
-        <a href="#" class="green-btn ownThumbnail thumbnailContent">
-            <p>Groups</p>
-        </a>
-    </div>
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:20px;width:150px;height:100px;">
-        <a href="#" class="yellow-btn ownThumbnail thumbnailContent">
-            <p>Reports</p>
-        </a>
-    </div> -->
       
     </div> 
-   <!--  <div class="row" style="margin-top:50px" masonry='{"transitionDuration": "0.4s", "itemSelector": ".buttonBlock"}'>
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:50px;width:150px;height:97.5px;">
-        <a href="#" class="orange-btn ownThumbnail thumbnailContent">
-            <p>Item 1</p>
-        </a>
-    </div>
-    
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:20px;width:150px;height:97.5px;">
-        <a href="#" class="light-orange-btn ownThumbnail thumbnailContent">
-            <p>Item 7</p>
-        </a>
-    </div>
-    
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:20px;width:150px;height:97.5px;">
-        <a href="#" class="green-btn ownThumbnail thumbnailContent">
-            <p>Item 12</p>
-        </a>
-    </div>
-    <div class="col-lg-2 col-sm-3 col-xs-6 buttonBlock" style="margin-left:20px;width:150px;height:97.5px;">
-        <a href="#" class="yellow-btn ownThumbnail thumbnailContent">
-            <p>Item 13</p>
-        </a>
-    </div>
-    </div> -->
-    </div>
+  
+    <!-- </div> -->
   </body> 
 </html>

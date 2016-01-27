@@ -1,0 +1,119 @@
+package ngdemo.web.rest;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
+
+/**
+ * Created by SetarehN on 1/6/2016.
+ */
+
+@Path("/testcases")
+public class WebServices {
+
+
+    ServerPhoneAgentRun serverPhoneAgentRun;
+
+    @Path("/start")
+    @GET
+
+    public String startTestCase(@QueryParam("flag") String flag) throws Exception {
+
+        System.out.print(flag+"flag");
+        //flag = "START";
+       
+        if (flag.equals("STARTTT")) {
+            // start test case
+        	serverPhoneAgentRun = new ServerPhoneAgentRun();
+        	System.out.println("11111111111");
+         String Uid = serverPhoneAgentRun.runTestCaseTrillian();
+          System.out.println("30000"+"************************");
+      //    Thread.sleep(30000);
+            // end of test case
+       //    Thread.sleep(4000);
+            System.out.print("111111");
+            JSONObject object;
+            JSONArray array = new JSONArray();
+            object = new JSONObject();
+            object.put("response", Uid);
+            array.add(object);
+            return array.toJSONString();
+        }
+
+
+   return null ;
+
+
+
+    }
+
+
+
+
+
+
+
+    @Path("/data")
+    @GET
+
+    public void setData(@QueryParam("packetsRX") String packetsRX,@QueryParam("packetsRXBytes") String packetsRXBytes
+            ,@QueryParam("packetsTX") String packetsTX,@QueryParam("packetsTXBytes") String packetsTXBytes,
+                          @QueryParam("latency") String latency) throws Exception {
+
+
+        System.out.println("dataaaaaa  "+packetsRX +"****"+ packetsRXBytes +"****"+ packetsTX +"****"+ packetsTXBytes+"****"+latency);
+
+        // set result in database
+          serverPhoneAgentRun =new ServerPhoneAgentRun();
+          serverPhoneAgentRun.setResultInDataBase(packetsRX,packetsTX,packetsRXBytes,packetsTXBytes,latency);
+
+          serverPhoneAgentRun.stopPhoneAgent();
+          /*  JSONObject object;
+            JSONArray array = new JSONArray();
+            object = new JSONObject();
+            object.put("response", "True");
+            array.add(object);
+            return array.toJSONString();*/
+
+
+      //  return null;
+    }
+
+
+
+
+    @Path("/post")
+    @POST
+
+    public String postTest(JSONObject jsonObject) throws Exception {
+
+
+
+            System.out.print("haaaaaaaaaaaaa");
+            JSONObject object;
+            JSONArray array = new JSONArray();
+            object = new JSONObject();
+            object.put("response", jsonObject.get("havij").toString());
+            array.add(object);
+            return array.toJSONString();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

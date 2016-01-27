@@ -90,9 +90,9 @@ public class DeviceRestService {
     	
     	System.out.println("adb devices");
     	String command = "adb devices";
-    	SampleJavaTest st = new SampleJavaTest();
+    	//SampleJavaTest st = new SampleJavaTest();
 		List<Device> dlist = new ArrayList<Device>();
-		org.codehaus.jettison.json.JSONObject finalObject = new org.codehaus.jettison.json.JSONObject();
+		//org.codehaus.jettison.json.JSONObject finalObject = new org.codehaus.jettison.json.JSONObject();
 		Process p;
 		try {
 			p = Runtime.getRuntime().exec(command);
@@ -108,16 +108,20 @@ public class DeviceRestService {
 			    }
 			}
 			for (String device : deviceList) {
-				String model=SampleJavaTest.getDeviceParameters(device);
-				String brand=SampleJavaTest.getDeviceBrand(device);
-				String version=SampleJavaTest.getDeviceVersion(device);
-				//System.out.println(device);
-				Device d = new Device();
-				d.setDevice(device);
-				d.setModel(model);
-				d.setBrand(brand.toUpperCase());
-				d.setVersion(version);
-			    dlist.add(d);
+				Device ddB = new Device();
+				ddB=TestcaseDao.getDeviceDetails(device);
+				if(ddB.getDevice().equals("")){
+					String model=SampleJavaTest.getDeviceParameters(device);
+					String brand=SampleJavaTest.getDeviceBrand(device);
+					String version=SampleJavaTest.getDeviceVersion(device);
+					ddB.setDevice(device);
+					ddB.setModel(model);
+					ddB.setBrand(brand);
+					ddB.setVersion(version);
+				}
+				
+				
+			    dlist.add(ddB);
 			}
 	       
 		} catch (Exception e) {

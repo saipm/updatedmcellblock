@@ -1,0 +1,122 @@
+<!doctype html>
+<html ng-app="plunker">
+  <head>
+  <script data-require="angular.js@1.2.8" data-semver="1.2.8" src="https://code.angularjs.org/1.2.8/angular.js"></script>
+    <link data-require="bootstrap@*" data-semver="3.2.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.css" />
+    <link data-require="bootstrap-css@~3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link data-require="font-awesome@*" data-semver="4.2.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+    <script data-require="ui-bootstrap@*" data-semver="0.11.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="example.js"></script>
+     <script src="moment.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css"> 
+    <link rel="stylesheet" href="newcss.css"> 
+    <script type="text/javascript"></script>
+    <style>
+    
+
+  body{
+  background-color:white;
+  }
+ 
+
+  body{
+font-family:Arial, Helvetica, sans-serif; 
+font-size:17px;
+}
+.info, .success, .warning, .error, .validation {
+border: 1px solid;
+margin: 10px 0px;
+padding:15px 10px 15px 50px;
+background-repeat: no-repeat;
+background-position: 10px center;
+}
+.cwhite{
+color: white;
+}
+.info {
+color: #00529B;
+background-color: #BDE5F8;
+background-image: url('https://cdn4.iconfinder.com/data/icons/32x32-free-design-icons/32/Info.png');
+}
+.success {
+color: #4F8A10;
+background-color: #DFF2BF;
+background-image:url('https://cdn4.iconfinder.com/data/icons/32x32-free-design-icons/32/Ok.png');
+}
+.warning {
+color: #9F6000;
+background-color: #FEEFB3;
+background-image: url('');
+}
+.error {
+color: #D8000C;
+background-color: #FFBABA;
+background-image: url('https://cdn4.iconfinder.com/data/icons/32x32-free-design-icons/32/Cancel.png');
+}
+
+.div-table{
+  display:table;         
+  width:1000px;;         
+  /* background-color:#eee;  */        
+  border:1px solid  #666666;         
+  border-spacing:5px;/*cellspacing:poor IE support for  this*/
+  margin-top:10px;
+}
+.div-table-row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.div-table-col{
+  float:left;/*fix for  buggy browsers*/
+  display:table-column;         
+  width:300px;         
+  /* background-color:#ccc; */  
+}
+    body{
+ /*  background:#567; */
+  font-family:'Open Sans',sans-serif;
+}
+
+tr.spaceUnder > td
+{
+  padding-bottom:2em;
+}
+
+tr.spaceUpper > td
+{
+  padding-top: 2em;
+}
+.tabhead{
+font-size: 1.1em;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    font-weight:bold;
+    background-color:#DCDCDC;
+    color: Black;
+    margin-left:10px;
+}
+.form{
+    padding:20px
+}
+.cancel{
+    
+    padding:20px;
+}
+html, body{
+    background-color: white;
+}
+    </style>
+    
+    </head>
+    
+    <body>
+    <div class="page" ng-controller="DevicesCtrl">
+    <div ng-repeat="device in devices">
+    {{device.device}}
+    </div>
+    </div>
+    </body>
+    
+    </html>

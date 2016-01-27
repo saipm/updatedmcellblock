@@ -1,0 +1,184 @@
+package ngdemo.web.rest;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class ServerPhoneAgentRun {
+	
+	
+
+
+    public void runPhoneAgent() throws InterruptedException {
+
+        //adb shell am start -n com.example.setarehn.phage/.MainActivity
+// adb install name.apk
+//adb shell am force-stop com.example.setarehn.phage
+
+        // run phone agent
+
+    /*    SampleJavaTest.javaShellScript("adb install app-debug.apk");
+
+
+        Thread.sleep(5000);
+
+
+        SampleJavaTest.javaShellScript("adb shell am start -n com.example.setarehn.phage/.MainActivity");*/
+
+    }
+
+
+
+    public void stopPhoneAgent() throws IOException, InterruptedException
+    {
+       
+       SampleJavaTest.javaShellScript("adb shell am force-stop com.example.setarehn.phage");
+       
+       System.out.println("phone agent is stopped !");
+    }
+    
+
+    public String runTestCaseTrillian() throws IOException, InterruptedException
+
+    {
+    	/*
+    	String command = "adb devices";
+    	List<String> deviceList = new ArrayList<String>();
+		Process p;
+		int i=1;
+		try {
+			
+			p = Runtime.getRuntime().exec(command);
+			Thread.sleep(6000);
+			p.waitFor();
+			String line="";
+            BufferedReader input1 = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			while ((line = input1.readLine()) != null) {
+			    if (line.endsWith("device")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    } if (line.endsWith("unauthorized")) {
+			        deviceList.add(line.split("\\t")[0]);
+			    }
+			}
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+		System.out.println("Devices connected:");
+		for(String s:deviceList){
+			System.out.println(i+"."+s);
+		    i++;	
+		}
+		 Scanner scanner = new Scanner(new InputStreamReader(System.in));
+    	String textPath="/home/setarehn/Documents/textMsg.sh ";
+    	Process textProcess;
+    	for(String s:deviceList){
+    		System.out.println("-----------------------------------------------------------");
+    		System.out.println("DeviceId:----"+s);
+    		System.out.println("-----------------------------------------------------------");
+    		System.out.println("Please enter the sender mobile number with country code:---");
+    		String input = scanner.next();
+    		System.out.println("-----------------------------------------------------------");
+    		scanner.nextLine();
+    		System.out.println("Please enter the message:---");
+    		String message = scanner.nextLine();
+    	
+    		//myThread.start();
+    		
+    		//Thread.sleep(50000);
+    		//myThread.stop();
+    	//	 myThread1.start();
+    	    	
+    	//    	Thread.sleep(50000);
+    		System.out.println("runniggggggggggggg test caseeeeeeeeeeee&&*****");
+    		textProcess = Runtime.getRuntime().exec();
+    		try {
+				Thread.sleep(6000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}*/
+    /*	System.out.println("*************************&&&&&&&&&&&&&&&&&&");
+    	String textPath="/home/setarehn/Documents/textMsg.sh ";
+    	String s = "1a5dacc6";
+    	 try {
+			SampleJavaTest.javaShellScript(textPath+s+" "+"+16419808211"+" "+"Hellooo");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+    	 
+    	return  this.trillianApplicationUID();
+    	 
+    	 
+    }
+    
+    public String trillianApplicationUID() throws IOException, InterruptedException
+    {
+    	 String s;
+ 		
+	      s =  SampleJavaTest.javaShellScript("adb shell dumpsys package com.ceruleanstudios.trillian.android | grep userId=");
+	      
+	      char[] a = s.toCharArray();
+	      String ss = "";
+	      
+	      
+	      for(int i=0 ; i<s.length() ; i++)
+	      {
+	    	  
+	    	  if(a[i] == '=')
+	    	  {
+	    		 for(int j=i ; a[j+1]!=' ' ; j++)
+	    		 {
+	    			 ss = ss + String.valueOf(a[j+1]) ;
+	    		 }
+	    		  break;
+	    	  }
+	    	  
+	      }
+	      
+	        System.out.println(ss);
+	        return ss;
+    }
+
+
+    public void setResultInDataBase(String numberOfRXPkts , String numberOfTXPkts , String bytesOfRXPkts , String bytesOfTXPkts , String latency)
+
+    {
+
+
+         System.out.println("Result .....Set");
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+	
+	
+
